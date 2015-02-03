@@ -72,6 +72,8 @@ class MessagesController extends \BaseController {
 			
 		// return dd($message);
 
+		$errors = array();
+
 		$items_sold = array();
 
 		$message = explode(",",$message);
@@ -93,7 +95,7 @@ class MessagesController extends \BaseController {
 
 			$items_sold[$tmp[0]] = $tmp[1];
 		}	
-		return dd($message);
+		// return dd($message);
 		// return dd($items_sold);
 		//validate access token	
 			
@@ -116,11 +118,14 @@ class MessagesController extends \BaseController {
 		$msg->products_sold = json_encode($items_sold);
 		$msg->bp_mobile = $bp_mobile;
 
+		// return dd($msg);
+		// return strlen($msg->customer_mobile);
+
 		if($msg->campaign_id != 'u1'){
 			$errors['campaign_id'] = 'Wrong Campaign Id';
 		}
 		
-		if( !sizeof($msg->customer_name) ){
+		if( !strlen($msg->customer_name) ){
 			
 			$errors['name_blank'] = "Customer name field blank";	
 
@@ -130,19 +135,19 @@ class MessagesController extends \BaseController {
 				$errors['name_alpha'] = "Customer name not alpha";
 			}
 
-			if( sizeof($msg->customer_name) > 15 ){
+			if( strlen($msg->customer_name) > 15 ){
 				$errors['name_size'] = "Customer name more than 15 characters";
 			}
 		}
 
 
-		if(!sizeof($msg->age)){
+		if(!strlen($msg->age)){
 
 			$errors['age_blank'] = "Customer age field blank";
 
 		}else{
 
-			if( ctype_digit($msg->age) ){
+			if( !ctype_digit($msg->age) ){
 				$errors['age_numeric'] = "Customer age not numeric";
 			}
 
@@ -152,7 +157,7 @@ class MessagesController extends \BaseController {
 		}
 
 
-		if(!sizeof($msg->gender)){
+		if(!strlen($msg->gender)){
 			
 			$errors['gender_blank'] = "Customer gender field is blank";
 
@@ -165,19 +170,19 @@ class MessagesController extends \BaseController {
 
 		
 
-		if( !sizeof($msg->customer_mobile) ){
+		if( !strlen($msg->customer_mobile) ){
 			
 			$errors['mobile_blank'] = "Customer mobile field blank";
 
 		}else{
 
-			if( sizeof($msg->customer_mobile) != 11 ){
+			if( strlen($msg->customer_mobile) != 11 ){
 				$errors['mobile_blank'] = "Customer mobile field invalid";
 			}
 		}
 		
 
-		if( !sizeof($msg->thana_code) ){
+		if( !strlen($msg->thana_code) ){
 			
 			$errors['thana_code_blank'] = "Thana code blank";
 
@@ -190,7 +195,7 @@ class MessagesController extends \BaseController {
 
 		
 
-		if(!sizeof($msg->education_id)){
+		if(!strlen($msg->education_id)){
 
 			$errors['education_blank'] = "Education field blank";
 
@@ -203,7 +208,7 @@ class MessagesController extends \BaseController {
 
 		
 
-		if(!sizeof($msg->occupation_id)){
+		if(!strlen($msg->occupation_id)){
 		
 			$errors['occupation_blank'] = "Occupation field blank";
 
@@ -216,7 +221,7 @@ class MessagesController extends \BaseController {
 
 		
 
-		if(!sizeof($msg->coupon_code)){
+		if(!strlen($msg->coupon_code)){
 			
 			$errors['coupon_code_blank'] = "Coupon Code Blank";			
 
@@ -227,7 +232,7 @@ class MessagesController extends \BaseController {
 			}
 		}
 
-		if(!sizeof($msg->currently_used_product_table_id)){
+		if(!strlen($msg->currently_used_product_table_id)){
 
 			$error['currently_using'] = "Currently Using Field blank";
 
@@ -239,7 +244,7 @@ class MessagesController extends \BaseController {
 			}
 		}
 
-		if(!sizeof($msg->sales)){
+		if(!strlen($msg->sales)){
 
 			$errors['sales_blank'] = "Sales Field Blank";
 
@@ -257,18 +262,19 @@ class MessagesController extends \BaseController {
 			$errors['items_sold_blank'] = "Items sold field blank";
 
 		}else{
-
-			if(!json_decode($msg->items_sold)){
+			
+			if(!json_decode($msg->products_sold)){
+				
 				$errors['items_sold_invalid'] = "Items sold field invalid format";
 			}
 
 		}
 
-		
+		return dd($errors);
 
 
 
-
+// 
 		
 
 
@@ -286,7 +292,7 @@ class MessagesController extends \BaseController {
 
 		// return dd($msg);
 
-		$msg->save();
+		// $msg->save();
 
 
 
