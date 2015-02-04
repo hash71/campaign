@@ -13,7 +13,7 @@ class BpTableSeeder extends Seeder {
 		
 		$second = ['Metro','Outer'];
 
-		foreach(range(1, 10) as $index)
+		foreach(range(1, 100) as $index)
 		{	
 				$f = $faker->randomElement($first);
 				$s = $faker->randomElement($second);

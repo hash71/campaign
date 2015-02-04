@@ -8,9 +8,9 @@ class DatabaseSeeder extends Seeder {
 	 * @return void
 	 */
 
-	protected $tables = ['bp_info','coupon'];
+	protected $tables = ['bp_info','coupon','message'];
 
-	protected $seeders = ['BpTableSeeder','CouponTableSeeder'];
+	protected $seeders = ['BpTableSeeder','CouponTableSeeder','MessagesTableSeeder'];
 
 	public function run()
 	{

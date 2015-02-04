@@ -9,7 +9,7 @@ class CouponTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 
-		foreach(range(1, 10) as $index)
+		foreach(range(1, 100) as $index)
 		{
 			DB::table('coupon')->insert([
 				'coupon_code'=>$faker->randomNumber($nbDigits = 8),				
