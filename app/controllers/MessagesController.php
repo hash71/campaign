@@ -7,11 +7,17 @@ class MessagesController extends \BaseController {
 
 		// valid pattern
 		/*
-		http://localhost/campaign/public/newapi/token/01910340450/u1,nazmul,25,m,01710340450,1001,5,1,81896021,2,y,1:2
+		http://localhost/campaign/public/newapi/token/01910340450/u1 nazmul,25,m,01710340450,1001,5,1,81896021,2,y,1:2
 
 		Length = 12(lowest possible valid message length)
 		*/
 
+		$pos = strpos($message, ' ');
+		
+		$message[$pos] = ',';
+		
+		return dd($message);
+		
 		$flag = 1;	
 
 		$errors = array();
