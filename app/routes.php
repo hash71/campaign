@@ -16,7 +16,7 @@ http://localhost/campaign/public/newapi/01710340450/token/u1,123456789,nazmul,25
 
 // valid
 /*
-http://localhost/campaign/public/newapi/01710340450/token/u1,nazmul,25,male,01710340450,0024,5,1,123456,2,y,1:2,3:4
+http://localhost/campaign/public/newapi/token/01710340450/u1,nazmul,25,m,01710340450,1001,5,1,81896021,2,y,1:2,3:4
 */
 
 
@@ -42,7 +42,9 @@ Route::get('api/{message}','MessagesController@create' );
 Route::controller('messages','MessagesController');
 
 Route::get('/', function()
-{
+{	
+	$msg = new Message;
+	$msg->save();
 	return View::make('hello');
 });
 
