@@ -43,6 +43,7 @@ Route::controller('messages','MessagesController');
 
 Route::get('/', function()
 {	
+	return ""*"";
 	$msg = new Message;
 	$msg->save();
 	return View::make('hello');

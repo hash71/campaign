@@ -65,6 +65,13 @@ class MessagesController extends \BaseController {
 
 						$tmp = explode(':',$message[$i]);
 
+						if( $tmp[0]*$tmp[1] == 0 ){//1:2,3:4 both of 1:2 must be integers
+							
+							$items_sold = array();
+							
+							break;
+						}
+
 						$items_sold[$tmp[0]] = $tmp[1];
 					}
 
@@ -161,15 +168,15 @@ class MessagesController extends \BaseController {
 				}
 
 
-				if( !strlen($msg->thana_code) ){
+				if( strlen($msg->thana_code)!=4 ){
 
-					$errors['thana_code_blank'] = "Thana code blank";
+					$errors['thana_code_format'] = "Thana code invalid format";
 
 				}else{
 
 					if( !in_array($msg->thana_code, DB::table('thana')->lists('thana_code'))){
 
-						$errors['thana_code_invalid'] = "Thana code not in database";
+						$errors['thana_code_not_found'] = "Thana code not in database";
 
 					}
 				}
@@ -257,12 +264,12 @@ class MessagesController extends \BaseController {
 				}
 			}
 
-
-
 		}	
 
 		$msg->errors = json_encode($errors);
-		
+
+		// $msg->save();
+
 		return dd($msg);
 
 
