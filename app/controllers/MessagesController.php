@@ -262,6 +262,7 @@ class MessagesController extends \BaseController {
 		}	
 
 		$msg->errors = json_encode($errors);
+		
 		return dd($msg);
 
 
