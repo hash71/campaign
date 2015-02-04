@@ -5,6 +5,13 @@ class MessagesController extends \BaseController {
 
 	public function newcreate($token,$bp_mobile,$message){
 
+		// valid pattern
+		/*
+		http://localhost/campaign/public/newapi/token/01910340450/u1,nazmul,25,m,01710340450,1001,5,1,81896021,2,y,1:2
+
+		Length = 12(lowest possible valid message length)
+		*/
+
 		$flag = 1;	
 
 		$errors = array();
@@ -14,8 +21,9 @@ class MessagesController extends \BaseController {
 		$message = explode(",",$message);
 
 		// return sizeof($message);
+		// return dd($message);
 
-		if(sizeof($message) < 11){
+		if(sizeof($message) < 12){
 
 			$errors['numberOfFields'] = "Insufficient number of fields";
 
@@ -32,7 +40,7 @@ class MessagesController extends \BaseController {
 
 				$message[$i] = trim($message[$i]);
 
-				if( strpos($message[$i], ':') || strlen($message[$i]) ){
+				if( strpos($message[$i], ':')  ){//if someone skips any field but adds extra in 1:2,3:4 then length will satisfy which is wrong
 
 					$flag = 0;
 
@@ -253,6 +261,7 @@ class MessagesController extends \BaseController {
 
 		}	
 
+		$msg->errors = json_encode($errors);
 		return dd($msg);
 
 
