@@ -35,15 +35,11 @@ http://localhost/campaign/public/newapi/token/01710340450/u1,nazmul,25,m,0171034
 
 Route::get('newapi/{token}/{bp_mobile}/{message}','MessagesController@newcreate');
 
-
-
-Route::get('api/{message}','MessagesController@create' );
-
 Route::controller('messages','MessagesController');
 
 Route::get('/', function()
 {	
-	return ""*"";
+	// return ""*"";
 	$msg = new Message;
 	$msg->save();
 	return View::make('hello');
