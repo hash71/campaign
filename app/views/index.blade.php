@@ -150,11 +150,11 @@
             <!-- New widget -->
             <div class="powerwidget cold-grey" id="flotchart-widget-2" data-widget-editbutton="false">
               <header>
-                <h2>Pie Chart<small>FlotChart</small></h2>
+                <h2>Customers<small>Gender Wise</small></h2>
               </header>
               <div class="inner-spacer">
                 <div class="flotchart-container">
-                  <div id="placeholder6b" class="flotchart-placeholder"></div>
+                  <canvas id="pie_gender"  class="flotchart-placeholder" width="290" height="210"/>
                 </div>
               </div>
             </div>
@@ -166,11 +166,11 @@
             <!-- New widget -->
             <div class="powerwidget cold-grey" id="flotchart-widget-3" data-widget-editbutton="false">
               <header>
-                <h2>Pie Chart<small>FlotChart</small></h2>
+                <h2>Used Product<small></small></h2>
               </header>
               <div class="inner-spacer">
                 <div class="flotchart-container">
-                  <div id="placeholder6c" class="flotchart-placeholder"></div>
+                  <canvas id="pie_used"  class="flotchart-placeholder" width="290" height="210"/>
                 </div>
               </div>
             </div>
@@ -182,11 +182,11 @@
             <!-- New widget -->
             <div class="powerwidget cold-grey" id="flotchart-widget-4" data-widget-editbutton="false">
               <header>
-                <h2>Pie Chart<small>FlotChart</small></h2>
+                <h2>Sales<small></small></h2>
               </header>
               <div class="inner-spacer">
                 <div class="flotchart-container">
-                  <div id="placeholder6d" class="flotchart-placeholder"></div>
+                  <canvas id="pie_sales"  class="flotchart-placeholder" width="290" height="210"/>
                 </div>
               </div>
             </div>
@@ -332,7 +332,7 @@ $('.powerwidget > header').on('touchstart', function(event){});
           var allData={{$data}};
           var bar_data = allData.bar;
           var pieData = allData.right_wrong;
-          var skus=[],smsChart=null,morris_area=null;
+          var skus=[],smsChart=null,morris_area=null,pie_sales=null,pie_used=null,pie_gender=null;
             $(document).ready(function () {
                 
                 $('#datetimepicker1').daterangepicker(
@@ -386,6 +386,10 @@ $('.powerwidget > header').on('touchstart', function(event){});
             
             });
       smsChart = new Chart($("#placeholder6a").get(0).getContext("2d")).Pie(pieData);
+      pie_sales = new Chart($("#pie_sales").get(0).getContext("2d")).Pie(allData.yes_no);
+      pie_used = new Chart($("#pie_used").get(0).getContext("2d")).Pie(allData.used_product);
+      pie_gender = new Chart($("#pie_gender").get(0).getContext("2d")).Pie(allData.gender);
+      console.log(allData);
         </script>
 
 

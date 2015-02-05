@@ -541,7 +541,7 @@ class MessagesController extends \BaseController {
 
 			];
 
-			return dd(json_encode($data['yes_no']));
+			// return dd(json_encode($data['yes_no']));
 
 			
 			// sales pie chart end
@@ -549,28 +549,38 @@ class MessagesController extends \BaseController {
 
 
 
-			// used product chart
+		// used product chart
 			$data['used_product'] = array();
 			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
 			
 			$products_used = ['UBL FW','Comp. FW','Soap User','Proxy User'];
+			$colors = ['#2CB075','#FF3483','#FF530D','#BF7524'];
+
+			$faker = Faker::create();
 
 			for($i=1; $i<=4; $i++){
 				
 				$single_data = array();
-				
+
 				$result = DB::table('message')
 					 	->where('created_at','>=',$start)
 					 	->where('created_at','<',$custom_end)
 					 	->where('currently_used_product_table_id',$i)
 					 	->count();
-				$single_data[ $products_used[$i-1] ] = $result;
+
+				$single_data=	['value'=> $result,
+								'color'=>$colors[$i-1],
+								'highlight'=> "#FE2E64",
+								'label'=>$products_used[$i-1] ];
+
+
+				// $single_data[ $products_used[$i-1] ] = $result;
 
 				array_push($data['used_product'],$single_data);
 
 			}
 
-			return $data['used_product'];
+			// return $data['used_product'];
 			
 
 			// used product chart end
@@ -586,7 +596,7 @@ class MessagesController extends \BaseController {
 			// $start = '2015-01-31';
 			// $end = '2015-02-05';
 
-			$start =  '2014-11-20';
+			$start =  '2014-10-20';
 			$end   =  '2014-11-30';
 			
 			// $start = date('Y-m-01');
@@ -793,6 +803,9 @@ class MessagesController extends \BaseController {
 			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
 			
 			$products_used = ['UBL FW','Comp. FW','Soap User','Proxy User'];
+			$colors = ['#2CB075','#FF3483','#FF530D','#BF7524'];
+
+			$faker = Faker::create();
 
 			for($i=1; $i<=4; $i++){
 				
@@ -803,13 +816,20 @@ class MessagesController extends \BaseController {
 					 	->where('created_at','<',$custom_end)
 					 	->where('currently_used_product_table_id',$i)
 					 	->count();
-				$single_data[ $products_used[$i-1] ] = $result;
+
+				$single_data=	['value'=> $result,
+								'color'=>$colors[$i-1],
+								'highlight'=> "#FE2E64",
+								'label'=>$products_used[$i-1] ];
+
+
+				// $single_data[ $products_used[$i-1] ] = $result;
 
 				array_push($data['used_product'],$single_data);
 
 			}
 
-			return $data['used_product'];
+			// return $data['used_product'];
 			
 
 			// used product chart end
