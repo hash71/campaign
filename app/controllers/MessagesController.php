@@ -5,18 +5,20 @@ class MessagesController extends \BaseController {
 
 	public function newcreate($token,$bp_mobile,$message){
 
-		// valid pattern
+		/*valid pattern*/
+
 		/*
 		http://localhost/campaign/public/newapi/token/01910340450/u1 nazmul,25,m,01710340450,1001,5,1,81896021,2,y,1:2
 
 		Length = 12(lowest possible valid message length)
 		*/
 
+		$full_msg = $message;// $full_msg is a string 
+
 		$pos = strpos($message, ' ');
 		
-		$message[$pos] = ',';
+		$message[$pos] = ',';//replacing the space after u1 with ,
 		
-		return dd($message);
 		
 		$flag = 1;	
 
@@ -24,14 +26,12 @@ class MessagesController extends \BaseController {
 
 		$items_sold = array();
 
-		$message = explode(",",$message);
+		$message = explode(",",$message);//$message is an array of tokens
 
-		// return sizeof($message);
-		// return dd($message);
 
-		if(sizeof($message) < 12){
+		if(sizeof($message) < 12){// , seperated field number
 
-			$errors['numberOfFields'] = "Insufficient number of fields";
+			$errors['number_of_fields'] = "Insufficient number of fields";
 
 			$msg = new Message;
 
@@ -39,6 +39,16 @@ class MessagesController extends \BaseController {
 
 			$msg->save();
 
+
+		}else if(strlen($full_msg)>255){//if message length exceeding 
+
+			$errors['message_length'] = "Message Length Exceeded";
+
+			$msg = new Message;
+
+			$msg->error = json_encode($errors);
+
+			$msg->save();
 
 		}else{
 
@@ -73,20 +83,22 @@ class MessagesController extends \BaseController {
 
 						if( $tmp[0]*$tmp[1] == 0 ){//1:2,3:4 both of 1:2 must be integers
 							
-							$items_sold = array();
+							$items_sold = null;//look
 							
 							break;
 						}
 
-						$items_sold[$tmp[0]] = $tmp[1];
+						$items_sold[$tmp[0]] = $tmp[1];//ex. $items_sold['1'] = 2
 					}
 
-				}catch(Exception $e){
+				}catch(Exception $e){//exception might occur for 1:,:2 these formats
 
-					$items_sold = array();
+					$items_sold = null;//look;
 
 				}
 				
+				//if the message have valid number of fields we save the message even
+				// if the field is blank like 1,'',3
 
 				$msg = new Message;
 
@@ -100,10 +112,40 @@ class MessagesController extends \BaseController {
 				$msg->occupation_id = $message[7];
 				$msg->coupon_code = $message[8];
 				$msg->currently_used_product_table_id = $message[9];
-				$msg->sales =ucfirst( $message[10]);	
+				$msg->sales =ucfirst( $message[10]);
+
 
 				$msg->products_sold = json_encode($items_sold);
+
+				if(json_decode($msg->products_sold)){//returns null if json is null
+
+					foreach ($items_sold as $key => $value) {
+						
+						if($key==1){
+							$msg->FAL = $value;							
+						}
+						if($key==2){
+							$msg->PDF = $value;							
+						}
+						if($key==3){
+							$msg->PWB = $value;							
+						}
+						if($key==4){
+							$msg->PNS = $value;							
+						}
+						if($key==5){
+							$msg->PPC = $value;							
+						}
+						if($key==6){
+							$msg->DBM = $value;							
+						}
+
+					}										
+
+				}
+
 				$msg->bp_mobile = $bp_mobile;
+				$msg->full_message = $full_msg;
 
 
 
@@ -195,7 +237,7 @@ class MessagesController extends \BaseController {
 
 				}else{
 
-					if($msg->education_id < 1 || $msg->education_id >5){
+					if($msg->education_id < 1 || $msg->education_id > 5){
 
 						$errors['education_range'] = "Education value not in range";
 					}
@@ -233,13 +275,13 @@ class MessagesController extends \BaseController {
 
 				if(!strlen($msg->currently_used_product_table_id)){
 
-					$error['currently_using'] = "Currently Using Field blank";
+					$error['currently_using'] = "Currently Using Products Field blank";
 
 				}else{
 
-					if($msg->currently_used_product_table_id < 1 || $msg->currently_used_product_table_id > 4){
+					if($msg->currently_used_product_table_id < 0 || $msg->currently_used_product_table_id > 4){
 
-						$error['currently_using_invalid'] = "Currently Using Product Not in Range";		
+						$error['currently_using_invalid'] = "Currently Using Product Not Listed";		
 					}
 				}
 
@@ -256,13 +298,13 @@ class MessagesController extends \BaseController {
 				}
 
 
-				if( !sizeof($items_sold) ){
+				if( !sizeof($items_sold) ){//size will be 0 if $items_sold = null
 
 					$errors['items_sold_blank'] = "Items sold field blank";
 
 				}else{
 
-					if(!json_decode($msg->products_sold)){
+					if(!json_decode($msg->products_sold)){//if $msg->products_sold = null
 
 						$errors['items_sold_invalid'] = "Items sold field invalid format";
 					}
@@ -272,12 +314,53 @@ class MessagesController extends \BaseController {
 
 		}	
 
-		$msg->errors = json_encode($errors);
+		$msg->error = json_encode($errors);
 
 		// $msg->save();
 
 		return dd($msg);
 
+
+	}
+
+	public function getIndex(){		
+
+		$str = '2014-02-09 - 2014-02-19';
+		
+		$start = "";
+		$end = "";
+		
+
+
+
+		for($i=0; $i<10; $i++)		$start.= $str[$i];		
+
+		for($i=13; $i<23; $i++)		$end.= $str[$i];
+	
+		$start = date('Y-m-d',strtotime('-1 day',strtotime($start)));
+		$end   = date('Y-m-d',strtotime('+1 day',strtotime($end)));
+		
+
+
+		$result = DB::table('message')
+					->where('created_at','>',$start)
+					->where('created_at','<',$end)
+					->lists('products_sold');
+		
+		// $result = DB::table('message')->find(102);
+
+
+
+		return dd($result->products_sold);
+
+		for($i=0; $i<sizeof($result); $i++){
+			return dd($result[$i]);
+			foreach ($result[$i] as $k) {
+				return $k;
+			}
+		}
+
+		return dd($result);
 
 	}
 

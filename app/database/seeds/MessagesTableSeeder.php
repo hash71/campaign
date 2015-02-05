@@ -23,8 +23,9 @@ class MessagesTableSeeder extends Seeder {
 				'coupon_code'=>$faker->randomElement(DB::table('coupon')->lists('coupon_code')),
 				'currently_used_product_table_id'=>$faker->randomElement([1,2,3,4,5]),
 				'sales'=>$faker->randomElement(['Y','N']),
-				'products_sold'=>json_encode($faker->randomElements(['1'=>2,'2'=>3,'3'=>4,'4'=>5,'5'=>6],$count=2)),
-				'bp_mobile'=>'019'.$faker->randomNumber($nbDigits = 8)
+				'products_sold'=>json_encode($faker->randomElements([['1'=>2],['2'=>3],['3'=>4],['4'=>5],['5'=>6]],$count=3)),
+				'bp_mobile'=>'019'.$faker->randomNumber($nbDigits = 8),
+				'created_at'=>$faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
 				// 'error'=> json_encode(['error'=>'This has an error'])
 			]);
 		}
