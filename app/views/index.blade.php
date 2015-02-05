@@ -81,9 +81,9 @@
           <div class="col-sm-2"></div>
           <div class="col-sm-3">
             <div class="form-group">
-              <select class="form-control" name="" id="">
-                <option value="">Option One</option>
-                <option value="">Option Two</option>
+              <select class="form-control" name="" id="switch_view">
+                <option value="1">SKU Wise Bar Chart</option>
+                <option value="2">Sales Trend</option>
               </select>
             </div>
           </div>
@@ -334,6 +334,23 @@ $('.powerwidget > header').on('touchstart', function(event){});
           var pieData = allData.right_wrong;
           var skus=[],smsChart=null,morris_area=null,pie_sales=null,pie_used=null,pie_gender=null;
             $(document).ready(function () {
+              //$("#morris-stacked-bar").hide();
+              $("#switch_view").change(function(){
+                if($("#switch_view").val()==1)
+                {
+                    $("#morrisasline").hide();
+                    $("#morris-stacked-bar").show();
+                    moris_bar.redraw();morris_area.redraw();
+                }
+                else
+                {
+                    $("#morrisasline").show();
+                    $("#morris-stacked-bar").hide();
+                    moris_bar.redraw();morris_area.redraw();
+                }
+
+              });
+              
                 
                 $('#datetimepicker1').daterangepicker(
           {
@@ -341,6 +358,7 @@ $('.powerwidget > header').on('touchstart', function(event){});
           },
           function()
           { 
+            $("#powerwidgets").css({ opacity: 0.5 });
             $.ajax({
               url: '#',     
               method: 'GET',
@@ -351,6 +369,7 @@ $('.powerwidget > header').on('touchstart', function(event){});
                   moris_bar.redraw();morris_area.redraw();
                   smsChart.destroy();
                   smsChart = new Chart($("#placeholder6a").get(0).getContext("2d")).Pie(dt.right_wrong);
+              $("#powerwidgets").css({ opacity: 1 });
               }
             });
           });  
@@ -383,7 +402,7 @@ $('.powerwidget > header').on('touchstart', function(event){});
                 ykeys: ['a', 'b','c','d','e','f'],
                 labels: skus
               });      
-            
+        $("#morrisasline").hide();
             });
       smsChart = new Chart($("#placeholder6a").get(0).getContext("2d")).Pie(pieData);
       pie_sales = new Chart($("#pie_sales").get(0).getContext("2d")).Pie(allData.yes_no);
