@@ -78,17 +78,22 @@ class MessagesController extends \BaseController {
 				try{
 
 					for ($i=11; $i<sizeof($message) ; $i++) { 
+						
+						if(strlen($message[$i])){
 
-						$tmp = explode(':',$message[$i]);
+							$tmp = explode(':',$message[$i]);
 
-						if( $tmp[0]*$tmp[1] == 0 ){//1:2,3:4 both of 1:2 must be integers
-							
-							$items_sold = null;//look
-							
-							break;
+							if( !ctype_digit($tmp[0]) || !ctype_digit($tmp[1]) ){//1:2,3:4 both of 1:2 must be integers
+								
+								$items_sold = -1;//lookup
+								
+								break;
+							}
+
+							$items_sold[$tmp[0]] = $tmp[1];//ex. $items_sold['1'] = 2
 						}
-
-						$items_sold[$tmp[0]] = $tmp[1];//ex. $items_sold['1'] = 2
+						
+						
 					}
 
 				}catch(Exception $e){//exception might occur for 1:,:2 these formats
@@ -117,7 +122,7 @@ class MessagesController extends \BaseController {
 
 				$msg->products_sold = json_encode($items_sold);
 
-				if(json_decode($msg->products_sold)){//returns null if json is null
+				if(json_decode($msg->products_sold) && $items_sold!=-1){//returns null if json is null
 
 					foreach ($items_sold as $key => $value) {
 						
@@ -297,8 +302,11 @@ class MessagesController extends \BaseController {
 					}
 				}
 
+				if($items_sold == -1){//lookup
 
-				if( !sizeof($items_sold) ){//size will be 0 if $items_sold = null
+					$errors['items_sold_invalid'] = "Items sold field invalid format";
+
+				}else if( !sizeof($items_sold) ){//size will be 0 if $items_sold = null
 
 					$errors['items_sold_blank'] = "Items sold field blank";
 
@@ -325,7 +333,7 @@ class MessagesController extends \BaseController {
 
 	public function getIndex(){		
 
-		$str = '2014-02-09 - 2014-02-19';
+		$str = '2015-01-19 - 2015-01-31';
 		
 		$start = "";
 		$end = "";
@@ -337,21 +345,23 @@ class MessagesController extends \BaseController {
 
 		for($i=13; $i<23; $i++)		$end.= $str[$i];
 	
-		$start = date('Y-m-d',strtotime('-1 day',strtotime($start)));
+		// $start = date('Y-m-d',strtotime('-1 day',strtotime($start)));
 		$end   = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 		
-
+		// return $start;
 
 		$result = DB::table('message')
-					->where('created_at','>',$start)
+					->where('created_at','>=',$start)
 					->where('created_at','<',$end)
-					->lists('products_sold');
-		
+					->sum('FAL');
+					// ->count();
+					
+		return $result;
 		// $result = DB::table('message')->find(102);
 
 
-
-		return dd($result->products_sold);
+		return dd($result);
+		return dd($result[0]->products_sold);
 
 		for($i=0; $i<sizeof($result); $i++){
 			return dd($result[$i]);

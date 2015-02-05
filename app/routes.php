@@ -23,15 +23,8 @@ Route::controller('messages','MessagesController');
 // });
 
 Route::get('/', function(){	
-
-	$x = NULL;
-	return sizeof($x);
-	$x= json_encode($x);
-	return dd(json_decode($x));
-
-	$msg = new Message;
-	$msg->save();
-	return View::make('hello');
+	
+	return dd(ctype_digit('23a'));
 });
 
 Route::get('token',function(){

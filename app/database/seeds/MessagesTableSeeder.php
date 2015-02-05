@@ -11,6 +11,16 @@ class MessagesTableSeeder extends Seeder {
 
 		foreach(range(1, 100) as $index)
 		{
+			$sold = [
+				'1'=>$faker->randomDigit,
+				'2'=>$faker->randomDigit,
+				'3'=>$faker->randomDigit,
+				'4'=>$faker->randomDigit,
+				'5'=>$faker->randomDigit,
+				'6'=>$faker->randomDigit,
+			];		
+			
+
 			Message::create([
 				'campaign_id'=>'u1',
 				'customer_name'=>$faker->name,
@@ -23,9 +33,21 @@ class MessagesTableSeeder extends Seeder {
 				'coupon_code'=>$faker->randomElement(DB::table('coupon')->lists('coupon_code')),
 				'currently_used_product_table_id'=>$faker->randomElement([1,2,3,4,5]),
 				'sales'=>$faker->randomElement(['Y','N']),
-				'products_sold'=>json_encode($faker->randomElements([['1'=>2],['2'=>3],['3'=>4],['4'=>5],['5'=>6]],$count=3)),
+				'products_sold'=>json_encode($sold),
+
 				'bp_mobile'=>'019'.$faker->randomNumber($nbDigits = 8),
-				'created_at'=>$faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now')
+				'created_at'=>$faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
+				
+				'FAL'=>$sold['1'],  
+				'PDF'=>$sold['2'],
+				'PWB'=>$sold['3'],
+				'PNS'=>$sold['4'],
+				'PPC'=>$sold['5'],
+				'DBM'=>$sold['6']
+
+													
+						
+
 				// 'error'=> json_encode(['error'=>'This has an error'])
 			]);
 		}
