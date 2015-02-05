@@ -2443,8 +2443,8 @@
 
 
 
-            // ========================================================================
-            //	Datatables
+             // ========================================================================
+            //  Datatables
             // ========================================================================
 
             //Basic Table
@@ -2475,8 +2475,57 @@
                 var oTable = $('#table-2').dataTable({
                     "oLanguage": {
                         "sSearch": "Search all columns:"
+                    },
+                    "sDom": 'C<"clear">lfrtip',
+                    colVis: {
+                        order: 'alfa'
                     }
-                });
+                }).columnFilter(
+                    {
+                     aoColumns: [
+                                    {
+                                         type: "text"
+                                    },
+                                    {
+                                         type: "text",
+                                    },
+                                    {
+                                         type: "select",
+                                         values: [ 'F', 'M' ]
+                                    }
+                                    ,
+                                    {
+                                        type: "text"
+                                    },
+                                    {
+                                         type: "text"
+                                    },
+                                    {
+                                         type: "text"
+                                    },
+                                    {
+                                         type: "text"
+                                    }
+                                    ,
+                                    {
+                                         type: "select",
+                                         values: [ 'Under SSC', 'SSC','HSC','Grad','Masters' ]
+                                    },
+                                    {
+                                         type: "select",
+                                         values: [ 'Student', 'Housewife','Service Holder','Owner of a Business' ]
+                                    },{type:'text'},
+                                    {
+                                        type: "select",
+                                         values: [ 'UBL FW', 'Comp. FW','Soap User','Proxy User' ]
+                                    },
+                                    {
+                                         type: "select",
+                                         values: [ 'Y', 'N' ]
+                                    },{type:"text"},{type:"text"},{type:"text"},{type:"text"},{type:"text"},{type:"text"}
+                                 ]
+               }
+                );
 
                 $("tfoot input").keyup(function () {
                     /* Filter on the column (the index) of this element */

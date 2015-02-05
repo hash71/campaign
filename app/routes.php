@@ -52,4 +52,6 @@ Route::get('token',function(){
 });
 
 
+Route::controller('table','TablesController');
+
 

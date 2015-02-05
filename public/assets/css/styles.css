@@ -353,6 +353,8 @@ blockquote {
 }
 
 .ui-sortable .powerwidget-sortable > header { cursor: move; }
+.table-overflow{overflow: auto;}
+
 
 .powerwidget > header h2 {
 	height: 100%;
