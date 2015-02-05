@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 
+
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <meta name="keywords" content="admin template, admin dashboard, inbox templte, calendar template, form validation">
@@ -8,11 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ORB</title>
 
-<link rel="stylesheet" type="text/css" href="assets/css/daterangepicker-bs3.css" />
-<link href="assets/css/styles.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../assets/css/daterangepicker-bs3.css" />
+<link href="../assets/css/styles.css" rel="stylesheet" type="text/css">
 
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-<script type="text/javascript" src="assets/js/vendors/modernizr/modernizr.custom.js"></script>
+<script type="text/javascript" src="../assets/js/vendors/modernizr/modernizr.custom.js"></script>
 </head>
 
 <body>
@@ -106,7 +107,7 @@
             <!-- New widget -->
             <div class="powerwidget cold-grey" id="morris-stacked-bar" data-widget-editbutton="false">
               <header>
-                <h2>Morris Stacked Bar Chart</h2>
+                <h2>SKU Wise Bar Chart</h2>
               </header>
               <div class="inner-spacer">
                 <div class="morrischart" id="bar_chart"></div>
@@ -264,90 +265,92 @@
 
 <!--Scripts--> 
 <!--JQuery--> 
-<script type="text/javascript" src="assets/js/vendors/jquery/jquery.min.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/jquery/jquery-ui.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/jquery/jquery.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/jquery/jquery-ui.min.js"></script> 
 
 <script>
 $('.powerwidget > header').on('touchstart', function(event){});
 </script>
 
 <!--EasyPieChart--> 
-<script type="text/javascript" src="assets/js/vendors/easing/jquery.easing.1.3.min.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/easypie/jquery.easypiechart.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/easing/jquery.easing.1.3.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/easypie/jquery.easypiechart.min.js"></script> 
 
 <!--Fullscreen--> 
-<script type="text/javascript" src="assets/js/vendors/fullscreen/screenfull.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/fullscreen/screenfull.min.js"></script> 
 
 <!--NanoScroller 
-<script type="text/javascript" src="assets/js/vendors/nanoscroller/jquery.nanoscroller.min.js"></script> -->
+<script type="text/javascript" src="../assets/js/vendors/nanoscroller/jquery.nanoscroller.min.js"></script> -->
 
 <!--Sparkline--> 
-<script type="text/javascript" src="assets/js/vendors/sparkline/jquery.sparkline.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/sparkline/jquery.sparkline.min.js"></script> 
 
 <!--Horizontal Dropdown--> 
-<script type="text/javascript" src="assets/js/vendors/horisontal/cbpHorizontalSlideOutMenu.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/classie/classie.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/horisontal/cbpHorizontalSlideOutMenu.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/classie/classie.js"></script> 
 
 <!--PowerWidgets--> 
-<script type="text/javascript" src="assets/js/vendors/powerwidgets/powerwidgets.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/powerwidgets/powerwidgets.min.js"></script> 
 
 <!--Morris Chart--> 
-<script type="text/javascript" src="assets/js/vendors/raphael/raphael-min.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/morris/morris.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/raphael/raphael-min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/morris/morris.min.js"></script> 
 
 <!--FlotChart--> 
-<script type="text/javascript" src="assets/js/vendors/flotchart/jquery.flot.min.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/flotchart/jquery.flot.resize.min.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/flotchart/jquery.flot.axislabels.js"></script>
-<script type="text/javascript" src="assets/js/vendors/flotchart/jquery.flot.pie.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/flotchart/jquery.flot.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/flotchart/jquery.flot.resize.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/flotchart/jquery.flot.axislabels.js"></script>
+<script type="text/javascript" src="../assets/js/vendors/flotchart/jquery.flot.pie.min.js"></script> 
 
 <!--Chart.js--> 
-<script type="text/javascript" src="assets/js/vendors/chartassets/js/chart.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/chart../assets/js/chart.min.js"></script> 
 
 <!--Calendar--> 
-<script type="text/javascript" src="assets/js/vendors/fullcalendar/fullcalendar.min.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/fullcalendar/gcal.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/fullcalendar/fullcalendar.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/fullcalendar/gcal.js"></script> 
 
 <!--Bootstrap--> 
-<script type="text/javascript" src="assets/js/vendors/bootstrap/bootstrap.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/bootstrap/bootstrap.min.js"></script> 
 
 <!--Vector Map--> 
-<script type="text/javascript" src="assets/js/vendors/vector-map/jquery.vmap.min.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/vector-map/jquery.vmap.sampledata.js"></script> 
-<script type="text/javascript" src="assets/js/vendors/vector-map/jquery.vmap.world.js"></script>
+<script type="text/javascript" src="../assets/js/vendors/vector-map/jquery.vmap.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/vector-map/jquery.vmap.sampledata.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/vector-map/jquery.vmap.world.js"></script>
 
 <!--Datepicker-->
-<script type="text/javascript" src="assets/js/vendors/datepicker/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="assets/js/vendors/datepicker/moment.js"></script>
-<script type="text/javascript" src="assets/js/vendors/datepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="../assets/js/vendors/datepicker/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="../assets/js/vendors/datepicker/moment.js"></script>
+<script type="text/javascript" src="../assets/js/vendors/datepicker/daterangepicker.js"></script>
 <!--ToDo--> 
-<script type="text/javascript" src="assets/js/vendors/todos/todos.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/todos/todos.js"></script> 
 
 <!--Main App--> 
-<script type="text/javascript" src="assets/js/scripts.js"></script>
+<script type="text/javascript" src="../assets/js/scripts.js"></script>
 
         <script type="text/javascript">
             // When the document is ready
-var moris_bar=null;
+          var bar_data = {{$datas}};
+          var skus=[];
             $(document).ready(function () {
                 
                 $('#datetimepicker1').daterangepicker(
           {
             format: 'YYYY-MM-DD'
           },
-          function(){ alert('closed');
-                });  
-        
+          function()
+          { 
+            $.ajax({
+              url: '#',     
+              method: 'GET',
+              data:{ 'range': $("#datetimepicker1").val()},
+              success: function(dt){
+                  moris_bar.setData(dt);
+                  moris_bar.redraw();
+              }
+            });
+          });  
 
-        var bar_data = [
-    { y: 'SKU 1', qtt: 100 },
-    { y: 'SKU 2', qtt: 20},
-    { y: 'SKU 3', qtt: 33},
-    { y: 'SKU 4', qtt: 56 },
-    { y: 'SKU 5', qtt: 67 },
-    { y: 'SKU 6', qtt: 100 },
-  ];
-  
+  $.each(bar_data,function(i,v){skus.push(v.y)});
     moris_bar = Morris.Bar({
                 element: 'bar_chart',
                 data: bar_data,
@@ -355,37 +358,36 @@ var moris_bar=null;
                 gridTextColor: '#000',
                 gridTextSize: 14,
         barColors: function (row, series, type) {
-          if(row.label == "SKU 1") return "#AD1D28";
-          else if(row.label == "SKU 2") return "#DEBB27";
-          else if(row.label == "SKU 3") return "#fec04c";
-          else if(row.label == "SKU 4") return "#1AB244";
-          else if(row.label == "SKU 5") return "#BAB244";
-          else if(row.label == "SKU 6") return "#CAB244";
+          if(row.label == "FAL") return "#AD1D28";
+          else if(row.label == "PDF") return "#DEBB27";
+          else if(row.label == "PWB") return "#fec04c";
+          else if(row.label == "PNS") return "#1AB244";
+          else if(row.label == "PPC") return "#BAB244";
+          else if(row.label == "DBM") return "#BA7FB0";
         },
                 stacked: true,
          xkey: 'y',
         ykeys: ['qtt'],
-        labels: ['SKU 1', 'SKU 2','SKU 3','SKU 4','SKU 5','SKU 6',]
+        labels: skus
 
 
             });
-        /**$.plot($("#bar_chart"), data, {
-            series: {
-                bars: {
-                    show: true,
-                    order: 1
-                }
-            },
-      grid: {
-        hoverable: true,
-        clickable: true
-      },
-            valueLabels: {
-                show: true
-            },
-      showTooltip: true,
-      
-      });*/
+
+                Morris.Area({
+                element: 'morris-area-lines',
+                 data: [
+    { y: '2014-01-01', a: 100, b: 90,c:10,d:11,e:12,f:21 },
+    { y: '2014-01-02', a: 75,  b: 65,c:89,d:11,e:12,f:54 },
+    { y: '2014-01-03', a: 50,  b: 40,c:45,d:11,e:12,f:13 },
+    { y: '2014-01-04', a: 75,  b: 65,c:10,d:11,e:12,f:13 },
+    { y: '2014-01-05', a: 50,  b: 40,c:22,d:11,e:34,f:13 },
+    { y: '2014-01-06', a: 75,  b: 65,c:33,d:11,e:12,f:13 },
+    { y: '2014-01-007', a: 100, b: 90,c:10,d:11,e:23,f:13 }
+  ],
+  xkey: 'y',
+  ykeys: ['a', 'b','c','d','e','f'],
+  labels: skus
+});
       
             
             });

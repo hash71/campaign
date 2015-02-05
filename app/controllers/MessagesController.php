@@ -331,46 +331,181 @@ class MessagesController extends \BaseController {
 
 	}
 
-	public function getIndex(){		
+	public function getIndex(){	
 
-		$str = '2015-01-19 - 2015-01-31';
+		// return "hello";
+
+		if (Request::ajax()){
+
+
+		    
+		    $str = Input::get('range');
+			
+			
+
+			$start = "";
+			$end = "";
+
+			for($i=0; $i<10; $i++)		$start.= $str[$i];		
+
+			for($i=13; $i<23; $i++)		$end.= $str[$i];
 		
-		$start = "";
-		$end = "";
-		
+			// $start = date('Y-m-d',strtotime('-1 day',strtotime($start)));
+			$end_plus_one   = date('Y-m-d',strtotime('+1 day',strtotime($end)));
+			
+			
 
+			$product_codes = ['FAL','PDF','PWB','PNS','PPC','DBM'];
 
+			$single_data = array();
 
-		for($i=0; $i<10; $i++)		$start.= $str[$i];		
+			$data = array();
 
-		for($i=13; $i<23; $i++)		$end.= $str[$i];
-	
-		// $start = date('Y-m-d',strtotime('-1 day',strtotime($start)));
-		$end   = date('Y-m-d',strtotime('+1 day',strtotime($end)));
-		
-		// return $start;
+			$data['bar']=array();
 
-		$result = DB::table('message')
-					->where('created_at','>=',$start)
-					->where('created_at','<',$end)
-					->sum('FAL');
-					// ->count();
-					
-		return $result;
-		// $result = DB::table('message')->find(102);
+			$data['trend'] = array();
 
+			//bar chart
+			foreach ($product_codes as $code) {
 
-		return dd($result);
-		return dd($result[0]->products_sold);
+				$result = DB::table('message')
+						->where('created_at','>=',$start)
+						->where('created_at','<',$end_plus_one)
+						->sum($code);	
 
-		for($i=0; $i<sizeof($result); $i++){
-			return dd($result[$i]);
-			foreach ($result[$i] as $k) {
-				return $k;
+				$single_data['y'] = $code;
+				$single_data['qtt'] = $result;
+
+				array_push($data['bar'], ($single_data));
 			}
+			//bar chart end
+
+
+
+
+
+
+
+
+
+			//trend chart
+			while (strtotime($start) <= strtotime($end)) {//for each date
+			 	
+
+			 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));//current date of the loop
+
+			 	$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+
+			 	$abc = ['a','b','c','d','d'];
+
+			 	$single_data['y'] = $date;
+
+			 	$i = 0;
+
+			 	foreach ($product_codes as $code) {//for each product			 		
+
+				 	$result = DB::table('message')
+				 			  ->where('created_at','>=',$date)
+				 			  ->where('created_at','<',$custom_end)
+				 			  ->sum($code);	
+
+				 	$single_data[ $abc[$i++] ] = $result;
+
+			 	}
+			 	array_push($data['trend'],$single_data);			 	
+			}
+			//trend chart end
+
+
+
+
+
+			return Response::json($data);
 		}
 
-		return dd($result);
+
+
+
+
+
+			$start =  '2014-01-01';
+			// $start =  date('Y-m-t');
+			$end = date('Y-m-01');
+		
+			// $start = date('Y-m-d',strtotime('-1 day',strtotime($start)));
+			$end_plus_one   = date('Y-m-d',strtotime('+1 day',strtotime($end)));
+			
+			
+			$product_codes = ['FAL','PDF','PWB','PNS','PPC','DBM'];
+			$single_data = array();
+
+			$data = array();
+
+			$data['bar']=array();
+
+			$data['trend'] = array();
+
+
+			// bar chart
+			foreach ($product_codes as $code) {
+
+				$result = DB::table('message')
+						->where('created_at','>=',$start)
+						->where('created_at','<',$end_plus_one)
+						->sum($code);	
+
+				$single_data['y'] = $code;
+				$single_data['qtt'] = $result;
+
+				array_push($data['bar'], ($single_data));
+
+
+			}
+			// bar chart end
+
+
+
+			//trend chart
+			while (strtotime($start) <= strtotime($end)) {//for each date
+			 	
+
+			 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));//current date of the loop
+
+			 	$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+
+			 	$abc = ['a','b','c','d','d'];
+
+			 	$single_data['y'] = $date;
+
+			 	$i = 0;
+
+			 	foreach ($product_codes as $code) {//for each product			 		
+
+				 	$result = DB::table('message')
+				 			  ->where('created_at','>=',$date)
+				 			  ->where('created_at','<',$custom_end)
+				 			  ->sum($code);	
+
+				 	$single_data[ $abc[$i++] ] = $result;
+
+			 	}
+			 	array_push($data['trend'],$single_data);			 	
+			}
+			//trend chart end
+
+
+			$datas= json_encode($data);
+			// return $datas;
+			return View::make('index',compact('datas'));
+
+
+
+		
+
+		
+					
+					
+		
 
 	}
 

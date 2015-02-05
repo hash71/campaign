@@ -558,9 +558,9 @@
 
         }
 
-        if (document.getElementById('morris-area-lines')) {
+        if (document.getElementById('morris-area-lines222')) {
             Morris.Area({
-                element: 'morris-area-lines',
+                element: 'morris-area-lines222',
                 behaveLikeLine: true,
                 data: [{
                         period: '2012 Q1',

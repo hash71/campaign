@@ -23,8 +23,20 @@ Route::controller('messages','MessagesController');
 // });
 
 Route::get('/', function(){	
-	
-	return dd(ctype_digit('23a'));
+
+	// Start date
+	 $date = '2015-01-01';
+	 // End date
+	 $end_date = '2015-03-01';
+	 
+	 $arr = array();
+	 // return strtotime($date);
+	 while (strtotime($date) <= strtotime($end_date)) {
+	 	array_push($arr, $date );
+	 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));
+	 	
+	 }
+	 return dd($arr);
 });
 
 Route::get('token',function(){
