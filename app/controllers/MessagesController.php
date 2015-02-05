@@ -341,7 +341,7 @@ class MessagesController extends \BaseController {
 		    
 		    $str = Input::get('range');
 			
-			
+
 
 			$start = "";
 			$end = "";
@@ -389,14 +389,18 @@ class MessagesController extends \BaseController {
 
 
 			//trend chart
-			while (strtotime($start) <= strtotime($end)) {//for each date
-			 	
+			$single_data = array();
+			
+			$date = $start;
 
-			 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));//current date of the loop
+			
+			while (strtotime($date) <= strtotime($end)) {//for each date
+			 	
+				//current date of the loop is $date
 
 			 	$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
 
-			 	$abc = ['a','b','c','d','d'];
+			 	$abc = ['a','b','c','d','e','f'];
 
 			 	$single_data['y'] = $date;
 
@@ -412,31 +416,188 @@ class MessagesController extends \BaseController {
 				 	$single_data[ $abc[$i++] ] = $result;
 
 			 	}
-			 	array_push($data['trend'],$single_data);			 	
+			 	array_push($data['trend'],$single_data);	
+
+			 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));//current date 		 	
 			}
 			//trend chart end
 
 
 
+			// right wrong pie chart
+
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+
+			$right = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->whereNull('error')
+				 	->count();
+
+			$total = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)				 	
+				 	->count();
+
+			$wrong = $total - $right;
+
+
+			$data['right_wrong'] = [
+
+				['value'=> $wrong,
+				'color'=>"#FF0040",
+				'highlight'=> "#FE2E64",
+				'label'=> "Incorrect SMS"],
+				[
+		          'value'=> $right,
+		          'color'=> "#04B404",
+		          'highlight'=> "#01DF01",
+		          'label'=> "Correct SMS"
+		        ]
+
+			];
+
+			// return dd(json_encode($data['right_wrong']));
+
+
+			// return $wrong;
+
+
+			// right wrong pie chart end
+
+
+
+
+
+			// gender pie chart
+
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+
+			$male = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->where('gender','M')
+				 	->count();
+
+			$female = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->where('gender','F')				 	
+				 	->count();
+
+			
+			$data['gender'] = [
+
+				['value'=> $male,
+				'color'=>"#FF0040",
+				'highlight'=> "#FE2E64",
+				'label'=> "Male"],
+				[
+		          'value'=> $female,
+		          'color'=> "#04B404",
+		          'highlight'=> "#01DF01",
+		          'label'=> "Female"
+		        ]
+
+			];
+			
+			// gender pie chart end
+
+
+
+
+
+
+
+			// sales pie chart
+
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+
+			$yes = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->where('sales','Y')
+				 	->count();
+
+			$no = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->where('sales','N')				 	
+				 	->count();
+
+			
+			$data['yes_no'] = [
+
+				['value'=> $yes,
+				'color'=>"#FF0040",
+				'highlight'=> "#FE2E64",
+				'label'=> "Yes"],
+				[
+		          'value'=> $no,
+		          'color'=> "#04B404",
+		          'highlight'=> "#01DF01",
+		          'label'=> "No"
+		        ]
+
+			];
+
+			return dd(json_encode($data['yes_no']));
+
+			
+			// sales pie chart end
+
+
+
+
+			// used product chart
+			$data['used_product'] = array();
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			
+			$products_used = ['UBL FW','Comp. FW','Soap User','Proxy User'];
+
+			for($i=1; $i<=4; $i++){
+				
+				$single_data = array();
+				
+				$result = DB::table('message')
+					 	->where('created_at','>=',$start)
+					 	->where('created_at','<',$custom_end)
+					 	->where('currently_used_product_table_id',$i)
+					 	->count();
+				$single_data[ $products_used[$i-1] ] = $result;
+
+				array_push($data['used_product'],$single_data);
+
+			}
+
+			return $data['used_product'];
+			
+
+			// used product chart end
 
 
 			return Response::json($data);
 		}
 
 
+			/*default page load*/
 
+			
+			// $start = '2015-01-31';
+			// $end = '2015-02-05';
 
-
-
-			$start =  '2014-01-01';
-			// $start =  date('Y-m-t');
-			$end = date('Y-m-01');
+			$start =  '2014-11-20';
+			$end   =  '2014-11-30';
+			
+			// $start = date('Y-m-01');
+			// $end =  date('Y-m-t');
 		
 			// $start = date('Y-m-d',strtotime('-1 day',strtotime($start)));
 			$end_plus_one   = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 			
 			
 			$product_codes = ['FAL','PDF','PWB','PNS','PPC','DBM'];
+			
 			$single_data = array();
 
 			$data = array();
@@ -445,8 +606,7 @@ class MessagesController extends \BaseController {
 
 			$data['trend'] = array();
 
-
-			// bar chart
+			//bar chart
 			foreach ($product_codes as $code) {
 
 				$result = DB::table('message')
@@ -461,19 +621,23 @@ class MessagesController extends \BaseController {
 
 
 			}
-			// bar chart end
-
+			//bar chart end
+			
 
 
 			//trend chart
-			while (strtotime($start) <= strtotime($end)) {//for each date
-			 	
+			$single_data = array();
+			
+			$date = $start;
 
-			 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));//current date of the loop
+			
+			while (strtotime($date) <= strtotime($end)) {//for each date
+			 	
+				//current date of the loop is $date
 
 			 	$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
 
-			 	$abc = ['a','b','c','d','d'];
+			 	$abc = ['a','b','c','d','e','f'];
 
 			 	$single_data['y'] = $date;
 
@@ -489,14 +653,176 @@ class MessagesController extends \BaseController {
 				 	$single_data[ $abc[$i++] ] = $result;
 
 			 	}
-			 	array_push($data['trend'],$single_data);			 	
+			 	array_push($data['trend'],$single_data);	
+
+			 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));//current date 		 	
 			}
 			//trend chart end
 
 
+			// right wrong pie chart
+
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+
+			$right = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->whereNull('error')
+				 	->count();
+
+			$total = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)				 	
+				 	->count();
+
+			$wrong = $total - $right;
+
+
+			$data['right_wrong'] = [
+
+				['value'=> $wrong,
+				'color'=>"#FF0040",
+				'highlight'=> "#FE2E64",
+				'label'=> "Incorrect SMS"],
+				[
+		          'value'=> $right,
+		          'color'=> "#04B404",
+		          'highlight'=> "#01DF01",
+		          'label'=> "Correct SMS"
+		        ]
+
+			];
+
+			// return dd(json_encode($data['right_wrong']));
+
+
+			// return $wrong;
+
+
+			// right wrong pie chart end
+
+
+
+
+
+
+			// gender pie chart
+
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+
+			$male = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->where('gender','M')
+				 	->count();
+
+			$female = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->where('gender','F')				 	
+				 	->count();
+
+			
+			$data['gender'] = [
+
+				['value'=> $male,
+				'color'=>"#FF0040",
+				'highlight'=> "#FE2E64",
+				'label'=> "Male"],
+				[
+		          'value'=> $female,
+		          'color'=> "#04B404",
+		          'highlight'=> "#01DF01",
+		          'label'=> "Female"
+		        ]
+
+			];
+			
+			// gender pie chart end
+
+
+
+
+
+
+			// sales pie chart
+
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+
+			$yes = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->where('sales','Y')
+				 	->count();
+
+			$no = DB::table('message')
+				 	->where('created_at','>=',$start)
+				 	->where('created_at','<',$custom_end)
+				 	->where('sales','N')				 	
+				 	->count();
+
+			
+			$data['yes_no'] = [
+
+				['value'=> $yes,
+				'color'=>"#FF0040",
+				'highlight'=> "#FE2E64",
+				'label'=> "Yes"],
+				[
+		          'value'=> $no,
+		          'color'=> "#04B404",
+		          'highlight'=> "#01DF01",
+		          'label'=> "No"
+		        ]
+
+			];
+
+			// return dd(json_encode($data['yes_no']));
+
+			
+			// sales pie chart end
+
+
+
+
+
+
+
+			// used product chart
+			$data['used_product'] = array();
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			
+			$products_used = ['UBL FW','Comp. FW','Soap User','Proxy User'];
+
+			for($i=1; $i<=4; $i++){
+				
+				$single_data = array();
+
+				$result = DB::table('message')
+					 	->where('created_at','>=',$start)
+					 	->where('created_at','<',$custom_end)
+					 	->where('currently_used_product_table_id',$i)
+					 	->count();
+				$single_data[ $products_used[$i-1] ] = $result;
+
+				array_push($data['used_product'],$single_data);
+
+			}
+
+			return $data['used_product'];
+			
+
+			// used product chart end
+
+
+
+
+			
 			$datas= json_encode($data);
-			// return $datas;
-			return View::make('index',compact('datas'));
+			$data = $datas;
+			// return dd($data);
+
+			return View::make('index',compact('data'));
 
 
 

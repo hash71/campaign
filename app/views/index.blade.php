@@ -117,7 +117,7 @@
             <!-- New widget -->
             <div class="powerwidget cold-grey" id="morrisasline" data-widget-editbutton="false">
               <header>
-                <h2>Morris Area Line<small>Lines As Area</small></h2>
+                <h2>Sales Trend<small>By Date</small></h2>
               </header>
               <div class="inner-spacer">
                 <div class="morrischart" id="morris-area-lines"></div>
@@ -135,7 +135,7 @@
               </header>
               <div class="inner-spacer">
                 <div class="flotchart-container">
-                  <div id="placeholder6a" class="flotchart-placeholder"></div>
+                  <canvas id="placeholder6a"  class="flotchart-placeholder" width="290" height="210"/>
                 </div>
               </div>
             </div>
@@ -303,7 +303,7 @@ $('.powerwidget > header').on('touchstart', function(event){});
 <script type="text/javascript" src="../assets/js/vendors/flotchart/jquery.flot.pie.min.js"></script> 
 
 <!--Chart.js--> 
-<script type="text/javascript" src="../assets/js/vendors/chart../assets/js/chart.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/chartjs/chart.min.js"></script> 
 
 <!--Calendar--> 
 <script type="text/javascript" src="../assets/js/vendors/fullcalendar/fullcalendar.min.js"></script> 
@@ -329,8 +329,10 @@ $('.powerwidget > header').on('touchstart', function(event){});
 
         <script type="text/javascript">
             // When the document is ready
-          var bar_data = {{$datas}};
-          var skus=[];
+          var allData={{$data}};
+          var bar_data = allData.bar;
+          var pieData = allData.right_wrong;
+          var skus=[],smsChart=null,morris_area=null;
             $(document).ready(function () {
                 
                 $('#datetimepicker1').daterangepicker(
@@ -344,8 +346,11 @@ $('.powerwidget > header').on('touchstart', function(event){});
               method: 'GET',
               data:{ 'range': $("#datetimepicker1").val()},
               success: function(dt){
-                  moris_bar.setData(dt);
-                  moris_bar.redraw();
+                  moris_bar.setData(dt.bar);
+                  morris_area.setData(dt.trend);
+                  moris_bar.redraw();morris_area.redraw();
+                  smsChart.destroy();
+                  smsChart = new Chart($("#placeholder6a").get(0).getContext("2d")).Pie(dt.right_wrong);
               }
             });
           });  
@@ -357,40 +362,30 @@ $('.powerwidget > header').on('touchstart', function(event){});
                 gridTextFamily: 'Open Sans, sans-serif',
                 gridTextColor: '#000',
                 gridTextSize: 14,
-        barColors: function (row, series, type) {
-          if(row.label == "FAL") return "#AD1D28";
-          else if(row.label == "PDF") return "#DEBB27";
-          else if(row.label == "PWB") return "#fec04c";
-          else if(row.label == "PNS") return "#1AB244";
-          else if(row.label == "PPC") return "#BAB244";
-          else if(row.label == "DBM") return "#BA7FB0";
-        },
-                stacked: true,
-         xkey: 'y',
-        ykeys: ['qtt'],
-        labels: skus
-
-
+                barColors: function (row, series, type) {
+                  if(row.label == "FAL") return "#AD1D28";
+                  else if(row.label == "PDF") return "#DEBB27";
+                  else if(row.label == "PWB") return "#fec04c";
+                  else if(row.label == "PNS") return "#1AB244";
+                  else if(row.label == "PPC") return "#BAB244";
+                  else if(row.label == "DBM") return "#BA7FB0";
+                },
+                        stacked: true,
+                 xkey: 'y',
+                ykeys: ['qtt'],
+                labels: skus
             });
 
-                Morris.Area({
+        morris_area = Morris.Area({
                 element: 'morris-area-lines',
-                 data: [
-    { y: '2014-01-01', a: 100, b: 90,c:10,d:11,e:12,f:21 },
-    { y: '2014-01-02', a: 75,  b: 65,c:89,d:11,e:12,f:54 },
-    { y: '2014-01-03', a: 50,  b: 40,c:45,d:11,e:12,f:13 },
-    { y: '2014-01-04', a: 75,  b: 65,c:10,d:11,e:12,f:13 },
-    { y: '2014-01-05', a: 50,  b: 40,c:22,d:11,e:34,f:13 },
-    { y: '2014-01-06', a: 75,  b: 65,c:33,d:11,e:12,f:13 },
-    { y: '2014-01-007', a: 100, b: 90,c:10,d:11,e:23,f:13 }
-  ],
-  xkey: 'y',
-  ykeys: ['a', 'b','c','d','e','f'],
-  labels: skus
-});
-      
+                data: allData.trend,
+                xkey: 'y',
+                ykeys: ['a', 'b','c','d','e','f'],
+                labels: skus
+              });      
             
             });
+      smsChart = new Chart($("#placeholder6a").get(0).getContext("2d")).Pie(pieData);
         </script>
 
 

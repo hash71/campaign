@@ -1403,7 +1403,7 @@
 
         };
         if ($("#placeholder6a").length) {
-            window.initFloatchartDemo2();
+           // window.initFloatchartDemo2();
         }
 
         //We init function to use it in AJAX Widgets Reload
