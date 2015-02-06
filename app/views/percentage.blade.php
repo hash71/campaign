@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 
-
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <meta name="keywords" content="admin template, admin dashboard, inbox templte, calendar template, form validation">
 <meta name="author" content="DazeinCreative">
 <meta name="description" content="ORB - Powerfull and Massive Admin Dashboard Template with tonns of useful features">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ORB</title>
+<title>Percentage Report</title>
 
-<link rel="stylesheet" type="text/css" href="../assets/css/daterangepicker-bs3.css" />
+<link href="../assets/css/datepicker.css" rel="stylesheet" type="text/css">
 <link href="../assets/css/styles.css" rel="stylesheet" type="text/css">
 
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -77,127 +76,117 @@
           <ul>
             <li><a href="index.html"><i class="fa fa-home"></i></a></li>
             <li><a href="index.html">Dashboard</a></li>
-            <li class="active">Data</li>
+            <li class="active">Percentage Report View</li>
           </ul>
         </div>
         <!--/Breadcrumb--> 
         
-        <div class="row">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-3">
-            <div class="form-group">
-              <select class="form-control" name="" id="switch_view">
-                <option value="1">SKU Wise Bar Chart</option>
-                <option value="2">Sales Trend</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-7">
-            <div class="date">
-                <div class="form-group">
-                  <div class="input-group date">
-                    <input type='text' class="form-control" id="datetimepicker1" placeholder="Pick Date"/>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
+
           
         <!-- Widget Row Start grid -->
         <div class="row" id="powerwidgets">
 
-          <div class="col-md-8 bootstrap-grid">
-            <!-- New widget -->
-            <div class="powerwidget cold-grey" id="morris-stacked-bar" data-widget-editbutton="false">
-              <header>
-                <h2>SKU Wise Bar Chart</h2>
-              </header>
-              <div class="inner-spacer">
-                <div class="morrischart" id="bar_chart"></div>
-              </div>
-            </div>
-            <!-- /New widget --> 
-            <!-- New widget -->
-            <div class="powerwidget cold-grey" id="morrisasline" data-widget-editbutton="false">
-              <header>
-                <h2>Sales Trend<small>By Date</small></h2>
-              </header>
-              <div class="inner-spacer">
-                <div class="morrischart" id="morris-area-lines"></div>
+            <div class="col-md-4 col-sm-6 bootstrap-grid">
+              <!-- New widget -->
+              <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-cold-grey" id="gender" data-widget-editbutton="false">
+              <header><b>Gender</b></header>
+              <div class="inner-spacer nopadding">
+                <div class="portlet-big-icon animated bounceIn text-white"><i class="fa fa-male"></i><i class="fa fa-female"></i></div>
+                <ul class="portlet-bottom-block">
+                  <li class="col-md-4 col-sm-4 col-xs-4"><strong></strong><small>Male</small></li>
+                  <li class="col-md-4 col-sm-4 col-xs-4"><strong></strong><small>Female</small></li>
+                  <li class="col-md-4 col-sm-4 col-xs-4"><strong>200%</strong><small></small></li>
+                </ul>
               </div>
             </div>
             <!-- /New widget -->
+            </div>
+            <!-- /Inner Row Col-md-4 -->
+
+          <div class="col-md-8 col-sm-12 bootstrap-grid">            
+            <!-- New widget -->
+            <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-orange" id="education" data-widget-editbutton="false">
+              <header><b>Education</b></header>
+              <div class="inner-spacer nopadding">
+                <div class="portlet-big-icon animated bounceIn"><i class="fa fa-graduation-cap"></i></div>
+                <ul class="portlet-bottom-block">
+                  <li class="col-md-2 col-sm-4 col-xs-4"><strong>10%</strong><small>Under SSC</small></li>
+                  <li class="col-md-2 col-sm-4 col-xs-4"><strong>20%</strong><small>SSC</small></li>
+                  <li class="col-md-2 col-sm-4 col-xs-4"><strong>20%</strong><small>HSC</small></li>
+                  <li class="col-md-2 col-sm-4 col-xs-4"><strong>30%</strong><small>Graduate</small></li>
+                  <li class="col-md-2 col-sm-4 col-xs-4"><strong>30%</strong><small>Masters</small></li>
+                  <li class="col-md-2 col-sm-4 col-xs-4"><strong>100%</strong><small>Total</small></li>
+                </ul>
+              </div>
+            </div>
+            <!-- /New widget -->             
           </div>
           <!-- /Inner Row Col-md-8 -->
-                          
-          <div class="col-md-4 bootstrap-grid"> 
-            <!-- New widget -->
-            <div class="powerwidget cold-grey" id="flotchart-widget-1" data-widget-editbutton="false">
-              <header>
-                <h2>SMS</h2>
-              </header>
-              <div class="inner-spacer">
-                <div class="flotchart-container">
-                  <canvas id="placeholder6a"  class="flotchart-placeholder" width="290" height="210"/>
-                </div>
-              </div>
-            </div>
-            <!-- End Widget -->
-          </div>
-          <!-- /Inner Row Col-md-4 -->
 
           <div class="clearfix"></div>
-                         
-          <div class="col-md-4 bootstrap-grid">
 
+          <div class="col-md-8 col-sm-12 bootstrap-grid">            
             <!-- New widget -->
-            <div class="powerwidget cold-grey" id="flotchart-widget-2" data-widget-editbutton="false">
-              <header>
-                <h2>Customers<small>Gender Wise</small></h2>
-              </header>
-              <div class="inner-spacer">
-                <div class="flotchart-container">
-                  <canvas id="pie_gender"  class="flotchart-placeholder" width="290" height="210"/>
-                </div>
+            <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-green-alt" id="occupation" data-widget-editbutton="false">
+              <header><b>Occupation</b></header>
+              <div class="inner-spacer nopadding">
+                <div class="portlet-big-icon animated bounceIn"><i class="fa fa-pied-piper-alt"></i></div>
+                <ul class="portlet-bottom-block">
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>100%</strong><small>Student</small></li>
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>100%</strong><small>Housewife</small></li>
+                  <li class="col-md-3 col-sm-3 col-xs-3"><strong>100%</strong><small>Service Holder</small></li>
+                  <li class="col-md-3 col-sm-3 col-xs-3"><strong>100%</strong><small>Owner of a Business</small></li>
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>100%</strong><small>Total</small></li>
+
+                </ul>
               </div>
             </div>
-            <!-- End Widget -->
+            <!-- /New widget -->             
           </div>
-          <!-- /Inner Row Col-md-4 -->             
-                         
-          <div class="col-md-4 bootstrap-grid"> 
-            <!-- New widget -->
-            <div class="powerwidget cold-grey" id="flotchart-widget-3" data-widget-editbutton="false">
-              <header>
-                <h2>Used Product<small></small></h2>
-              </header>
-              <div class="inner-spacer">
-                <div class="flotchart-container">
-                  <canvas id="pie_used"  class="flotchart-placeholder" width="290" height="210"/>
-                </div>
+          <!-- /Inner Row Col-md-8 -->
+
+            <div class="col-md-4 col-sm-6 bootstrap-grid">
+              <!-- New widget -->
+              <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-dark-blue" id="sales" data-widget-editbutton="false">
+              <header><b>Sales</b></header>
+              <div class="inner-spacer nopadding">
+                <div class="portlet-big-icon animated bounceIn text-white"><i class="fa fa-money"></i></div>
+                <ul class="portlet-bottom-block">
+                  <li class="col-md-4 col-sm-4 col-xs-4"><strong>100%</strong><small>Yes</small></li>
+                  <li class="col-md-4 col-sm-4 col-xs-4"><strong>100%</strong><small>No</small></li>
+                  <li class="col-md-4 col-sm-4 col-xs-4"><strong>100%</strong><small>Total</small></li>
+                </ul>
               </div>
             </div>
-            <!-- End Widget -->
-          </div>
-          <!-- /Inner Row Col-md-4 -->             
-                         
-          <div class="col-md-4 bootstrap-grid"> 
+            <!-- /New widget -->
+            </div>
+            <!-- /Inner Row Col-md-4 -->
+
+          <div class="clearfix"></div>
+          <div class="col-md-12 col-sm-12 bootstrap-grid"> 
+            
             <!-- New widget -->
-            <div class="powerwidget cold-grey" id="flotchart-widget-4" data-widget-editbutton="false">
-              <header>
-                <h2>Sales<small></small></h2>
-              </header>
-              <div class="inner-spacer">
-                <div class="flotchart-container">
-                  <canvas id="pie_sales"  class="flotchart-placeholder" width="290" height="210"/>
-                </div>
+            <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-purple" id="curUsedProduct" data-widget-editbutton="false">
+              <header><b>Currently Used Product</b></header>
+              <div class="inner-spacer nopadding">
+                <div class="portlet-big-icon animated bounceIn"><i class="glyphicon glyphicon-magnet"></i></div>
+                <ul class="portlet-bottom-block">
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>100%</strong><small>SKU 1</small></li>
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>100%</strong><small>SKU 2</small></li>
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>100%</strong><small>SKU 3</small></li>
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>100%</strong><small>SKU 4</small></li>
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>100%</strong><small>SKU 5</small></li>
+                  <li class="col-md-1 col-sm-1 col-xs-1"><strong>100%</strong><small>SKU 6</small></li>
+                  <li class="col-md-1 col-sm-1 col-xs-1"><strong>100%</strong><small>Total</small></li>
+                </ul>
               </div>
             </div>
-            <!-- End Widget -->
+            <!-- /New widget --> 
+            
           </div>
-          <!-- /Inner Row Col-md-4 --> 
+          <!-- /Inner Row Col-md-3 -->
+
+
         </div>
         <!-- /Widgets Row End Grid--> 
     </div>
@@ -308,7 +297,7 @@ $('.powerwidget > header').on('touchstart', function(event){});
 <script type="text/javascript" src="../assets/js/vendors/flotchart/jquery.flot.pie.min.js"></script> 
 
 <!--Chart.js--> 
-<script type="text/javascript" src="../assets/js/vendors/chartjs/chart.min.js"></script> 
+<script type="text/javascript" src="../assets/js/vendors/chart../assets/js/chart.min.js"></script> 
 
 <!--Calendar--> 
 <script type="text/javascript" src="../assets/js/vendors/fullcalendar/fullcalendar.min.js"></script> 
@@ -322,10 +311,9 @@ $('.powerwidget > header').on('touchstart', function(event){});
 <script type="text/javascript" src="../assets/js/vendors/vector-map/jquery.vmap.sampledata.js"></script> 
 <script type="text/javascript" src="../assets/js/vendors/vector-map/jquery.vmap.world.js"></script>
 
-<!--Datepicker-->
+<!--Datepicker--> 
 <script type="text/javascript" src="../assets/js/vendors/datepicker/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="../assets/js/vendors/datepicker/moment.js"></script>
-<script type="text/javascript" src="../assets/js/vendors/datepicker/daterangepicker.js"></script>
+
 <!--ToDo--> 
 <script type="text/javascript" src="../assets/js/vendors/todos/todos.js"></script> 
 
@@ -334,86 +322,13 @@ $('.powerwidget > header').on('touchstart', function(event){});
 
         <script type="text/javascript">
             // When the document is ready
-          var allData={{$data}};
-          var bar_data = allData.bar;
-          var pieData = allData.right_wrong;
-          var skus=[],smsChart=null,morris_area=null,pie_sales=null,pie_used=null,pie_gender=null;
             $(document).ready(function () {
-              //$("#morris-stacked-bar").hide();
-              $("#switch_view").change(function(){
-                if($("#switch_view").val()==1)
-                {
-                    $("#morrisasline").hide();
-                    $("#morris-stacked-bar").show();
-                    moris_bar.redraw();morris_area.redraw();
-                }
-                else
-                {
-                    $("#morrisasline").show();
-                    $("#morris-stacked-bar").hide();
-                    moris_bar.redraw();morris_area.redraw();
-                }
-
-              });
-              
                 
-                $('#datetimepicker1').daterangepicker(
-          {
-            format: 'YYYY-MM-DD'
-          },
-          function()
-          { 
-            $("#powerwidgets").css({ opacity: 0.5 });
-            $.ajax({
-              url: '#',     
-              method: 'GET',
-              data:{ 'range': $("#datetimepicker1").val()},
-              success: function(dt){
-                  moris_bar.setData(dt.bar);
-                  morris_area.setData(dt.trend);
-                  moris_bar.redraw();morris_area.redraw();
-                  smsChart.destroy();
-                  smsChart = new Chart($("#placeholder6a").get(0).getContext("2d")).Pie(dt.right_wrong);
-              $("#powerwidgets").css({ opacity: 1 });
-              }
+                $('#datetimepicker1').datepicker({
+                    format: "dd/mm/yyyy"
+                });  
+            
             });
-          });  
-
-  $.each(bar_data,function(i,v){skus.push(v.y)});
-    moris_bar = Morris.Bar({
-                element: 'bar_chart',
-                data: bar_data,
-                gridTextFamily: 'Open Sans, sans-serif',
-                gridTextColor: '#000',
-                gridTextSize: 14,
-                barColors: function (row, series, type) {
-                  if(row.label == "FAL") return "#AD1D28";
-                  else if(row.label == "PDF") return "#DEBB27";
-                  else if(row.label == "PWB") return "#fec04c";
-                  else if(row.label == "PNS") return "#1AB244";
-                  else if(row.label == "PPC") return "#BAB244";
-                  else if(row.label == "DBM") return "#BA7FB0";
-                },
-                        stacked: true,
-                 xkey: 'y',
-                ykeys: ['qtt'],
-                labels: skus
-            });
-
-        morris_area = Morris.Area({
-                element: 'morris-area-lines',
-                data: allData.trend,
-                xkey: 'y',
-                ykeys: ['a', 'b','c','d','e','f'],
-                labels: skus
-              });      
-        $("#morrisasline").hide();
-            });
-      smsChart = new Chart($("#placeholder6a").get(0).getContext("2d")).Pie(pieData);
-      pie_sales = new Chart($("#pie_sales").get(0).getContext("2d")).Pie(allData.yes_no);
-      pie_used = new Chart($("#pie_used").get(0).getContext("2d")).Pie(allData.used_product);
-      pie_gender = new Chart($("#pie_gender").get(0).getContext("2d")).Pie(allData.gender);
-      console.log(allData);
         </script>
 
 

@@ -50,13 +50,18 @@
   <div class="main-wrap">  
    
     <!--Main Menu-->
-    <div class="responsive-admin-menu">
+    <div class="responsive-admin-menu">    
       <div class="responsive-menu">ORB
         <div class="menuicon"><i class="fa fa-angle-down"></i></div>
       </div>
       <ul id="menu">
         <li><a class="active" href="index.html" title="Dashboard"><i class="entypo-briefcase"></i><span> Dashboard</span></a></li>
       </ul>
+      <ul>
+      <li>{{link_to('messages/index','Index Page')}}</li>
+      <li>{{link_to('percentage/index','Percentage Page')}}</li>
+      <li>{{link_to('table/index','Table Page')}}</li>
+    </ul>
     </div>
     <!--/MainMenu-->
     

@@ -6,37 +6,32 @@
 use Faker\Factory as Faker;
 
 
+Route::get('dummy_user',function(){
 
+	User::create([
+			'email'=>'analyzen@gmail.com',
+			'password'=>Hash::make('analyzen')
+	]);
+
+});
 
 Route::get('newapi/{token}/{bp_mobile}/{message}','MessagesController@newcreate');
 
-Route::controller('messages','MessagesController');
+Route::group(['before'=>'auth'], function(){
 
+	Route::controller('messages','MessagesController');
 
+	Route::controller('table','TablesController');
 
+	Route::controller('percentage','PercentageController');
 
+});
 
-// Route::get('index',function(){
-	
-// 	return View::make('index');
-
-// });
+Route::controller('users', 'UsersController');
 
 Route::get('/', function(){	
-
-	// Start date
-	 $date = '2015-01-01';
-	 // End date
-	 $end_date = '2015-03-01';
-	 
-	 $arr = array();
-	 // return strtotime($date);
-	 while (strtotime($date) <= strtotime($end_date)) {
-	 	array_push($arr, $date );
-	 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));
-	 	
-	 }
-	 return dd($arr);
+		// return "hello";
+		return View::make('percentage');	
 });
 
 Route::get('token',function(){
@@ -52,6 +47,6 @@ Route::get('token',function(){
 });
 
 
-Route::controller('table','TablesController');
+
 
 
