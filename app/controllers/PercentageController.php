@@ -86,7 +86,7 @@ class PercentageController extends \BaseController {
 
  		
 
- 		return View::make('percentage',	compact('total_records','males','females','education','occupation','currently_used_products','products'));		
+ 		return View::make('percentage',	compact('total_records','males','females','education','occupation','currently_used_products','products','yes','no'));		
 
 
 		
