@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2015 at 03:41 PM
+-- Generation Time: Feb 06, 2015 at 12:20 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.9
 
@@ -1171,6 +1171,29 @@ INSERT INTO `thana` (`id`, `division`, `district`, `thana_name`, `thana_code`, `
 (597, 'Sylhet', 'Sylhet', 'South Shurma', '7039', '2015-02-03 07:14:17', '0000-00-00 00:00:00'),
 (598, 'Sylhet', 'Sylhet', 'Sylhet Sadar', '7040', '2015-02-03 07:14:17', '0000-00-00 00:00:00'),
 (599, 'Sylhet', 'Sylhet', 'Zakiganj', '7041', '2015-02-03 07:14:17', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'analyzen@gmail.com', '$2y$10$jvo3APzimJkEf6WliZHPyemithWJ7urCtO0KDBOj9xAV2fy1Uwg.S', '5Mfadn3zlSqa57izwobvuPwtl6ghyAJWAegruBACHV9yXwBxhWbvmhlf5kuP', '2015-02-06 10:57:56', '2015-02-06 04:57:56');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
