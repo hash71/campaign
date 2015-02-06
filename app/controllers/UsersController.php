@@ -20,7 +20,7 @@ class UsersController extends \BaseController {
 	public function postLoginCheck(){
 		
 		// return "hello"	;
-		if(Auth::attempt(['email'=>Input::get('email'),'password'=>Input::get('password')])){
+		if(Auth::attempt(['email'=>Input::get('email'),'password'=>Input::get('password')],true)){
 			
 			return Redirect::to('messages/index');
 			

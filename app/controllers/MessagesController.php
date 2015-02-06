@@ -377,14 +377,11 @@ class MessagesController extends \BaseController {
 				$single_data['qtt'] = $result;
 
 				array_push($data['bar'], ($single_data));
+
+
 			}
+			// return dd(json_encode($data['bar']));
 			//bar chart end
-
-
-
-
-
-
 
 
 
@@ -420,13 +417,14 @@ class MessagesController extends \BaseController {
 
 			 	$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));//current date 		 	
 			}
+			// return dd(json_encode($data['trend']));
 			//trend chart end
 
 
 
 			// right wrong pie chart
 
-			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 
 			$right = DB::table('message')
 				 	->where('created_at','>=',$start)
@@ -471,7 +469,7 @@ class MessagesController extends \BaseController {
 
 			// gender pie chart
 
-			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 
 			$male = DB::table('message')
 				 	->where('created_at','>=',$start)
@@ -500,7 +498,7 @@ class MessagesController extends \BaseController {
 		        ]
 
 			];
-			
+			// return dd(json_encode($data['gender']));
 			// gender pie chart end
 
 
@@ -511,7 +509,7 @@ class MessagesController extends \BaseController {
 
 			// sales pie chart
 
-			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 
 			$yes = DB::table('message')
 				 	->where('created_at','>=',$start)
@@ -551,7 +549,7 @@ class MessagesController extends \BaseController {
 
 		// used product chart
 			$data['used_product'] = array();
-			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 			
 			$products_used = ['UBL FW','Comp. FW','Soap User','Proxy User'];
 			$colors = ['#2CB075','#FF3483','#FF530D','#BF7524'];
@@ -585,7 +583,7 @@ class MessagesController extends \BaseController {
 
 			// used product chart end
 
-
+			// return $data;
 			return Response::json($data);
 		}
 
@@ -672,7 +670,7 @@ class MessagesController extends \BaseController {
 
 			// right wrong pie chart
 
-			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 
 			$right = DB::table('message')
 				 	->where('created_at','>=',$start)
@@ -718,7 +716,7 @@ class MessagesController extends \BaseController {
 
 			// gender pie chart
 
-			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 
 			$male = DB::table('message')
 				 	->where('created_at','>=',$start)
@@ -757,7 +755,7 @@ class MessagesController extends \BaseController {
 
 			// sales pie chart
 
-			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 
 			$yes = DB::table('message')
 				 	->where('created_at','>=',$start)
@@ -800,7 +798,7 @@ class MessagesController extends \BaseController {
 
 			// used product chart
 			$data['used_product'] = array();
-			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($date)));
+			$custom_end = date('Y-m-d',strtotime('+1 day',strtotime($end)));
 			
 			$products_used = ['UBL FW','Comp. FW','Soap User','Proxy User'];
 			$colors = ['#2CB075','#FF3483','#FF530D','#BF7524'];

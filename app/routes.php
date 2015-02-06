@@ -30,8 +30,7 @@ Route::group(['before'=>'auth'], function(){
 Route::controller('users', 'UsersController');
 
 Route::get('/', function(){	
-		// return "hello";
-		return View::make('percentage');	
+		return Redirect::to('users/login');
 });
 
 Route::get('token',function(){

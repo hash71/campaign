@@ -135,13 +135,13 @@
                 <div class="portlet-big-icon animated bounceIn"><i class="fa fa-pied-piper-alt"></i></div>
                 <ul class="portlet-bottom-block">
 
-                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>{{$occupation['Student']}}({{round(($occupation['Student']/$total_records)*100,2)}})</strong><small>Student</small></li>
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>{{$occupation['Student']}}({{round(($occupation['Student']/$total_records)*100,2)}}%)</strong><small>Student</small></li>
 
-                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>{{$occupation['Housewife']}}({{round(($occupation['Housewife']/$total_records)*100,2)}})</strong><small>Housewife</small></li>
+                  <li class="col-md-2 col-sm-2 col-xs-2"><strong>{{$occupation['Housewife']}}({{round(($occupation['Housewife']/$total_records)*100,2)}}%)</strong><small>Housewife</small></li>
 
-                  <li class="col-md-3 col-sm-3 col-xs-3"><strong>{{$occupation['Service Holder'] }}({{round(($occupation['Service Holder']/$total_records)*100,2)}})</strong><small>Service Holder</small></li>
+                  <li class="col-md-3 col-sm-3 col-xs-3"><strong>{{$occupation['Service Holder'] }}({{round(($occupation['Service Holder']/$total_records)*100,2)}}%)</strong><small>Service Holder</small></li>
 
-                  <li class="col-md-3 col-sm-3 col-xs-3"><strong>{{$occupation['Owner of a Business']}}({{round(($occupation['Owner of a Business']/$total_records)*100,2)}})</strong><small>Owner of a Business</small></li>
+                  <li class="col-md-3 col-sm-3 col-xs-3"><strong>{{$occupation['Owner of a Business']}}({{round(($occupation['Owner of a Business']/$total_records)*100,2)}}%)</strong><small>Owner of a Business</small></li>
 
                   <li class="col-md-2 col-sm-2 col-xs-2"><strong>{{$total_records}}</strong><small>Total</small></li>
 
@@ -159,8 +159,8 @@
               <div class="inner-spacer nopadding">
                 <div class="portlet-big-icon animated bounceIn text-white"><i class="fa fa-money"></i></div>
                 <ul class="portlet-bottom-block">
-                  <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$yes}}({{round(($yes/$total_records)*100,2)}})</strong><small>Yes</small></li>
-                  <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$no}}({{round(($no/$total_records)*100,2)}})</strong><small>No</small></li>
+                  <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$yes}}({{round(($yes/$total_records)*100,2)}}%)</strong><small>Yes</small></li>
+                  <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$no}}({{round(($no/$total_records)*100,2)}}%)</strong><small>No</small></li>
                   <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$total_records}}</strong><small>Total</small></li>
                 </ul>
               </div>
@@ -195,7 +195,7 @@
 
                   <li class="col-md-1 col-sm-1 col-xs-1"><strong>{{$products['DBM']}}({{round(($products['DBM']/$sum)*100,2)}}%)</strong><small>DBM</small></li>
 
-                  <li class="col-md-1 col-sm-1 col-xs-1"><strong>{{$total_records}}</strong><small>Total</small></li>
+                  <li class="col-md-1 col-sm-1 col-xs-1"><strong>{{$sum}}</strong><small>Total</small></li>
                 </ul>
               </div>
             </div>
