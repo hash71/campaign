@@ -139,9 +139,10 @@
                 <h2>SMS</h2>
               </header>
               <div class="inner-spacer">
-                <div class="flotchart-container">
+                <div class="flotchart-container" style="width: 60%;float: left;">
                   <canvas id="placeholder6a"  class="flotchart-placeholder" width="290" height="210"/>
                 </div>
+                <div id="placeholder6a_legend"></div>
               </div>
             </div>
             <!-- End Widget -->
@@ -158,9 +159,10 @@
                 <h2>Customers<small>Gender Wise</small></h2>
               </header>
               <div class="inner-spacer">
-                <div class="flotchart-container">
+                <div class="flotchart-container" style="width: 60%;float: left;">
                   <canvas id="pie_gender"  class="flotchart-placeholder" width="290" height="210"/>
                 </div>
+                <div id="pie_gender_legend"></div>
               </div>
             </div>
             <!-- End Widget -->
@@ -174,9 +176,10 @@
                 <h2>Used Product<small></small></h2>
               </header>
               <div class="inner-spacer">
-                <div class="flotchart-container">
+                <div class="flotchart-container" style="width: 60%;float: left;">
                   <canvas id="pie_used"  class="flotchart-placeholder" width="290" height="210"/>
                 </div>
+                <div id="pie_used_legend"></div>
               </div>
             </div>
             <!-- End Widget -->
@@ -190,9 +193,10 @@
                 <h2>Sales<small></small></h2>
               </header>
               <div class="inner-spacer">
-                <div class="flotchart-container">
+                <div class="flotchart-container" style="width: 60%;float: left;">
                   <canvas id="pie_sales"  class="flotchart-placeholder" width="290" height="210"/>
                 </div>
+                 <div id="pie_sales_legend"></div>
               </div>
             </div>
             <!-- End Widget -->
@@ -339,7 +343,6 @@ $('.powerwidget > header').on('touchstart', function(event){});
           var pieData = allData.right_wrong;
           var skus=[],smsChart=null,morris_area=null,pie_sales=null,pie_used=null,pie_gender=null;
             $(document).ready(function () {
-              //$("#morris-stacked-bar").hide();
               $("#switch_view").change(function(){
                 if($("#switch_view").val()==1)
                 {
@@ -369,12 +372,20 @@ $('.powerwidget > header').on('touchstart', function(event){});
               method: 'GET',
               data:{ 'range': $("#datetimepicker1").val()},
               success: function(dt){
+                  allData=dt;
                   moris_bar.setData(dt.bar);
                   morris_area.setData(dt.trend);
                   moris_bar.redraw();morris_area.redraw();
-                  smsChart.destroy();
+                  smsChart.destroy();pie_sales.destroy();pie_used.destroy();pie_gender.destroy();
                   smsChart = new Chart($("#placeholder6a").get(0).getContext("2d")).Pie(dt.right_wrong);
-              $("#powerwidgets").css({ opacity: 1 });
+                  pie_sales = new Chart($("#pie_sales").get(0).getContext("2d")).Pie(dt.yes_no);
+                  pie_used = new Chart($("#pie_used").get(0).getContext("2d")).Pie(dt.used_product);
+                  pie_gender = new Chart($("#pie_gender").get(0).getContext("2d")).Pie(dt.gender);
+                  $("#pie_gender_legend").html(pie_gender.generateLegend());
+                  $("#pie_sales_legend").html(pie_sales.generateLegend());
+                  $("#pie_used_legend").html(pie_used.generateLegend());
+                  $("#placeholder6a_legend").html(smsChart.generateLegend());
+                  $("#powerwidgets").css({ opacity: 1 });
               }
             });
           });  
@@ -413,7 +424,10 @@ $('.powerwidget > header').on('touchstart', function(event){});
       pie_sales = new Chart($("#pie_sales").get(0).getContext("2d")).Pie(allData.yes_no);
       pie_used = new Chart($("#pie_used").get(0).getContext("2d")).Pie(allData.used_product);
       pie_gender = new Chart($("#pie_gender").get(0).getContext("2d")).Pie(allData.gender);
-      console.log(allData);
+      $("#pie_gender_legend").html(pie_gender.generateLegend());
+      $("#pie_sales_legend").html(pie_sales.generateLegend());
+      $("#pie_used_legend").html(pie_used.generateLegend());
+      $("#placeholder6a_legend").html(smsChart.generateLegend());
         </script>
 
 
