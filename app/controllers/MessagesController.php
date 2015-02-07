@@ -10,323 +10,360 @@ class MessagesController extends \BaseController {
 		/*
 		http://localhost/campaign/public/newapi/token/01910340450/u1 nazmul,25,m,01710340450,1001,5,1,81896021,2,y,1:2
 
+		http://localhost/campaign/public/newapi/c1Wt08MRDhdTce7vFNF8BYNNiImjgFeDjsqbkkK6KbWYkji7rFV+UjIDaVbgwYKt3E0pVeMKVYAz5N2QWrOBFQ==/01910340450/u1 nazmul,25,m,01710340450,1001,5,1,81896021,2,y,1:2
+
+
 		Length = 12(lowest possible valid message length)
 		*/
 
-		$full_msg = $message;// $full_msg is a string 
+		$key = '@u@1423uH@u05H@k1uGw1TH1551';
+		$string = 'r;w{h3R$M|u/&RPZOPaIZ?-_=|:&zy_i*|gfYr2.eB72xPi01b30V&%d~O5{%!mQ';
 
-		$pos = strpos($message, ' ');
-		
-		$message[$pos] = ',';//replacing the space after u1 with ,
-		
-		
-		$flag = 1;	
+		$encrypted = $token;
 
-		$errors = array();
+		$decrypted = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($encrypted), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
 
-		$items_sold = array();
+		if($decrypted === $string){
 
-		$message = explode(",",$message);//$message is an array of tokens
+			if(substr($message, 0, 3) != 'u1 '){//there must be a space preceding proper campaign id
 
-
-		if(sizeof($message) < 12){// , seperated field number
-
-			$errors['number_of_fields'] = "Insufficient number of fields";
-
-			$msg = new Message;
-
-			$msg->error = json_encode($errors);
-
-			$msg->save();
-
-
-		}else if(strlen($full_msg)>255){//if message length exceeding 
-
-			$errors['message_length'] = "Message Length Exceeded";
-
-			$msg = new Message;
-
-			$msg->error = json_encode($errors);
-
-			$msg->save();
-
-		}else{
-
-			for ($i=0; $i < 11; $i++) { 
-
-				$message[$i] = trim($message[$i]);
-
-				if( strpos($message[$i], ':')  ){//if someone skips any field but adds extra in 1:2,3:4 then length will satisfy which is wrong
-
-					$flag = 0;
-
-					$errors['numberOfFields'] = "Insufficient number of fields";
-
-					$msg = new Message;
-
-					$msg->error = json_encode($errors);
-
-					$msg->save();
-
-					break;
-
-				}
-			}
-
-			if($flag == 1){
-
-				try{
-
-					for ($i=11; $i<sizeof($message) ; $i++) { 
-						
-						if(strlen($message[$i])){
-
-							$tmp = explode(':',$message[$i]);
-
-							if( !ctype_digit($tmp[0]) || !ctype_digit($tmp[1]) ){//1:2,3:4 both of 1:2 must be integers
-								
-								$items_sold = -1;//lookup
-								
-								break;
-							}
-
-							$items_sold[$tmp[0]] = $tmp[1];//ex. $items_sold['1'] = 2
-						}
-						
-						
-					}
-
-				}catch(Exception $e){//exception might occur for 1:,:2 these formats
-
-					$items_sold = null;//look;
-
-				}
+				$errors['invalid_campaign'] = 'Campaign id not valid';
 				
-				//if the message have valid number of fields we save the message even
-				// if the field is blank like 1,'',3
-
 				$msg = new Message;
 
-				$msg->campaign_id = $message[0];			
-				$msg->customer_name = $message[1];
-				$msg->age = $message[2];
-				$msg->gender = ucfirst($message[3]);
-				$msg->customer_mobile = $message[4];
-				$msg->thana_code = $message[5];
-				$msg->education_id = $message[6];
-				$msg->occupation_id = $message[7];
-				$msg->coupon_code = $message[8];
-				$msg->currently_used_product_table_id = $message[9];
-				$msg->sales =ucfirst( $message[10]);
+				$msg->error = json_encode($errors);
 
+				return dd($msg);
 
-				$msg->products_sold = json_encode($items_sold);
+				$msg->save();
+				
 
-				if(json_decode($msg->products_sold) && $items_sold!=-1){//returns null if json is null
+			}else{
 
-					foreach ($items_sold as $key => $value) {
+						$full_msg = $message;// $full_msg is a string 
+
+						$pos = strpos($message, ' ');
 						
-						if($key==1){
-							$msg->FAL = $value;							
-						}
-						if($key==2){
-							$msg->PDF = $value;							
-						}
-						if($key==3){
-							$msg->PWB = $value;							
-						}
-						if($key==4){
-							$msg->PNS = $value;							
-						}
-						if($key==5){
-							$msg->PPC = $value;							
-						}
-						if($key==6){
-							$msg->DBM = $value;							
-						}
+						$message[$pos] = ',';//replacing the space after u1 with ,
+						
+						
+						$flag = 1;	
 
-					}										
+						$errors = array();
 
-				}
+						$items_sold = array();
 
-				$msg->bp_mobile = $bp_mobile;
-				$msg->full_message = $full_msg;
+						$message = explode(",",$message);//$message is an array of tokens
 
 
+						if(sizeof($message) < 12){// , seperated field number
 
-				if($msg->campaign_id != 'u1'){
+							$errors['number_of_fields'] = "Insufficient number of fields";
 
-					$errors['campaign_id'] = 'Wrong Campaign Id';
+							$msg = new Message;
 
-				}
+							$msg->error = json_encode($errors);
 
-				if( !strlen($msg->customer_name) ){
+							$msg->save();
 
-					$errors['name_blank'] = "Customer name field blank";	
 
-				}else{
+						}else if(strlen($full_msg)>255){//if message length exceeding 
 
-					if( strlen($msg->customer_name) > 15 ){
+							$errors['message_length'] = "Message Length Exceeded";
 
-						$errors['name_size'] = "Customer name more than 15 characters";
+							$msg = new Message;
 
-					}
-				}
+							$msg->error = json_encode($errors);
 
+							$msg->save();
 
-				if(!strlen($msg->age)){
+						}else{
 
-					$errors['age_blank'] = "Customer age field blank";
+							for ($i=0; $i < 11; $i++) { 
 
-				}else{
+								$message[$i] = trim($message[$i]);
 
-					if( !ctype_digit($msg->age) ){
+								if( strpos($message[$i], ':')  ){//if someone skips any field but adds extra in 1:2,3:4 then length will satisfy which is wrong
 
-						$errors['age_numeric'] = "Customer age not numeric";
+									$flag = 0;
 
-					}
+									$errors['numberOfFields'] = "Insufficient number of fields";
 
-					if( $msg->age < 10 || $msg->age > 100  ){
+									$msg = new Message;
 
-						$errors['age_limit'] = "Customer age not in limit";
+									$msg->error = json_encode($errors);
 
-					}
-				}
+									$msg->save();
 
+									break;
 
-				if(!strlen($msg->gender)){
+								}
+							}
 
-					$errors['gender_blank'] = "Customer gender field is blank";
+							if($flag == 1){
 
-				}else{
+								try{
 
-					if($msg->gender !== 'm' && $msg->gender !=='f' && $msg->gender !== 'M' && $msg->gender !== 'F'){
+									for ($i=11; $i<sizeof($message) ; $i++) { 
+										
+										if(strlen($message[$i])){
 
-						$errors['gender_type'] = "Customer gender type undefined";
-					}
-				}
+											$tmp = explode(':',$message[$i]);
 
+											if( !ctype_digit($tmp[0]) || !ctype_digit($tmp[1]) ){//1:2,3:4 both of 1:2 must be integers
+												
+												$items_sold = -1;//lookup
+												
+												break;
+											}
 
+											$items_sold[$tmp[0]] = $tmp[1];//ex. $items_sold['1'] = 2
+										}
+										
+										
+									}
 
-				if( !strlen($msg->customer_mobile) ){
+								}catch(Exception $e){//exception might occur for 1:,:2 these formats
 
-					$errors['mobile_blank'] = "Customer mobile field blank";
+									$items_sold = null;//look;
 
-				}else{
+								}
+								
+								//if the message have valid number of fields we save the message even
+								// if the field is blank like 1,'',3
 
-					if( strlen($msg->customer_mobile) != 11 ){
+								$msg = new Message;
 
-						$errors['mobile_blank'] = "Customer mobile field not 11 digit";
-					}
-				}
+								$msg->campaign_id = $message[0];			
+								$msg->customer_name = $message[1];
+								$msg->age = $message[2];
+								$msg->gender = ucfirst($message[3]);
+								$msg->customer_mobile = $message[4];
+								$msg->thana_code = $message[5];
+								$msg->education_id = $message[6];
+								$msg->occupation_id = $message[7];
+								$msg->coupon_code = $message[8];
+								$msg->currently_used_product_table_id = $message[9];
+								$msg->sales =ucfirst( $message[10]);
 
 
-				if( strlen($msg->thana_code)!=4 ){
+								$msg->products_sold = json_encode($items_sold);
 
-					$errors['thana_code_format'] = "Thana code invalid format";
+								if(json_decode($msg->products_sold) && $items_sold!=-1){//returns null if json is null
 
-				}else{
+									foreach ($items_sold as $key => $value) {
+										
+										if($key==1){
+											$msg->FAL = $value;							
+										}
+										if($key==2){
+											$msg->PDF = $value;							
+										}
+										if($key==3){
+											$msg->PWB = $value;							
+										}
+										if($key==4){
+											$msg->PNS = $value;							
+										}
+										if($key==5){
+											$msg->PPC = $value;							
+										}
+										if($key==6){
+											$msg->DBM = $value;							
+										}
 
-					if( !in_array($msg->thana_code, DB::table('thana')->lists('thana_code'))){
+									}										
 
-						$errors['thana_code_not_found'] = "Thana code not in database";
+								}
 
-					}
-				}
+								$msg->bp_mobile = $bp_mobile;
+								$msg->full_message = $full_msg;
 
 
 
-				if(!strlen($msg->education_id)){
+								if($msg->campaign_id != 'u1'){
 
-					$errors['education_blank'] = "Education field blank";
+									$errors['campaign_id'] = 'Wrong Campaign Id';
 
-				}else{
+								}
 
-					if($msg->education_id < 1 || $msg->education_id > 5){
+								if( !strlen($msg->customer_name) ){
 
-						$errors['education_range'] = "Education value not in range";
-					}
-				}
+									$errors['name_blank'] = "Customer name field blank";	
 
+								}else{
 
+									if( strlen($msg->customer_name) > 15 ){
 
-				if(!strlen($msg->occupation_id)){
+										$errors['name_size'] = "Customer name more than 15 characters";
 
-					$errors['occupation_blank'] = "Occupation field blank";
+									}
+								}
 
-				}else{
 
-					if($msg->occupation_id < 1 || $msg->occupation_id > 4 ){
+								if(!strlen($msg->age)){
 
-						$errors['occupation_range'] = "Occupation value not in range";
+									$errors['age_blank'] = "Customer age field blank";
 
-					}
-				}
+								}else{
 
+									if( !ctype_digit($msg->age) ){
 
+										$errors['age_numeric'] = "Customer age not numeric";
 
-				if(!strlen($msg->coupon_code)){
+									}
 
-					$errors['coupon_code_blank'] = "Coupon Code Blank";			
+									if( $msg->age < 10 || $msg->age > 100  ){
 
-				}else{
+										$errors['age_limit'] = "Customer age not in limit";
 
-					if( !in_array($msg->coupon_code, DB::table('coupon')->lists('coupon_code')) ){
+									}
+								}
 
-						$errors['coupon_code_invalid'] = "Coupon Code not listed in Database";			
 
-					}
-				}
+								if(!strlen($msg->gender)){
 
-				if(!strlen($msg->currently_used_product_table_id)){
+									$errors['gender_blank'] = "Customer gender field is blank";
 
-					$error['currently_using'] = "Currently Using Products Field blank";
+								}else{
 
-				}else{
+									if($msg->gender !== 'm' && $msg->gender !=='f' && $msg->gender !== 'M' && $msg->gender !== 'F'){
 
-					if($msg->currently_used_product_table_id < 0 || $msg->currently_used_product_table_id > 4){
+										$errors['gender_type'] = "Customer gender type undefined";
+									}
+								}
 
-						$error['currently_using_invalid'] = "Currently Using Product Not Listed";		
-					}
-				}
 
-				if(!strlen($msg->sales)){
 
-					$errors['sales_blank'] = "Sales Field Blank";
+								if( !strlen($msg->customer_mobile) ){
 
-				}else{
+									$errors['mobile_blank'] = "Customer mobile field blank";
 
-					if($msg->sales !='y' && $msg->sales !='n' && $msg->sales !='Y' && $msg->sales !='N'){
+								}else{
 
-						$errors['sales_invalid'] = "Sales format invalid";
-					}
-				}
+									if( strlen($msg->customer_mobile) != 11 ){
 
-				if($items_sold == -1){//lookup
+										$errors['mobile_blank'] = "Customer mobile field not 11 digit";
+									}
+								}
 
-					$errors['items_sold_invalid'] = "Items sold field invalid format";
 
-				}else if( !sizeof($items_sold) ){//size will be 0 if $items_sold = null
+								if( strlen($msg->thana_code)!=4 ){
 
-					$errors['items_sold_blank'] = "Items sold field blank";
+									$errors['thana_code_format'] = "Thana code invalid format";
 
-				}else{
+								}else{
 
-					if(!json_decode($msg->products_sold)){//if $msg->products_sold = null
+									if( !in_array($msg->thana_code, DB::table('thana')->lists('thana_code'))){
 
-						$errors['items_sold_invalid'] = "Items sold field invalid format";
-					}
+										$errors['thana_code_not_found'] = "Thana code not in database";
 
-				}
+									}
+								}
+
+
+
+								if(!strlen($msg->education_id)){
+
+									$errors['education_blank'] = "Education field blank";
+
+								}else{
+
+									if($msg->education_id < 1 || $msg->education_id > 5){
+
+										$errors['education_range'] = "Education value not in range";
+									}
+								}
+
+
+
+								if(!strlen($msg->occupation_id)){
+
+									$errors['occupation_blank'] = "Occupation field blank";
+
+								}else{
+
+									if($msg->occupation_id < 1 || $msg->occupation_id > 4 ){
+
+										$errors['occupation_range'] = "Occupation value not in range";
+
+									}
+								}
+
+
+
+								if(!strlen($msg->coupon_code)){
+
+									$errors['coupon_code_blank'] = "Coupon Code Blank";			
+
+								}else{
+
+									if( !in_array($msg->coupon_code, DB::table('coupon')->lists('coupon_code')) ){
+
+										$errors['coupon_code_invalid'] = "Coupon Code not listed in Database";			
+
+									}
+								}
+
+								if(!strlen($msg->currently_used_product_table_id)){
+
+									$error['currently_using'] = "Currently Using Products Field blank";
+
+								}else{
+
+									if($msg->currently_used_product_table_id < 0 || $msg->currently_used_product_table_id > 4){
+
+										$error['currently_using_invalid'] = "Currently Using Product Not Listed";		
+									}
+								}
+
+								if(!strlen($msg->sales)){
+
+									$errors['sales_blank'] = "Sales Field Blank";
+
+								}else{
+
+									if($msg->sales !='y' && $msg->sales !='n' && $msg->sales !='Y' && $msg->sales !='N'){
+
+										$errors['sales_invalid'] = "Sales format invalid";
+									}
+								}
+
+								if($items_sold == -1){//lookup
+
+									$errors['items_sold_invalid'] = "Items sold field invalid format";
+
+								}else if( !sizeof($items_sold) ){//size will be 0 if $items_sold = null
+
+									$errors['items_sold_blank'] = "Items sold field blank";
+
+								}else{
+
+									if(!json_decode($msg->products_sold)){//if $msg->products_sold = null
+
+										$errors['items_sold_invalid'] = "Items sold field invalid format";
+									}
+
+								}
+							}
+
+						}	
+
+						$msg->error = json_encode($errors);
+
+						// $msg->save();
+
+						return dd($msg);
+
+
+
 			}
 
-		}	
+				    
+		}//end of the token condition
 
-		$msg->error = json_encode($errors);
 
-		// $msg->save();
 
-		return dd($msg);
 
 
 	}
